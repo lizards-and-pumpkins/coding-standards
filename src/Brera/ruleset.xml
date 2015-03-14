@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<ruleset name="Brera">
+    <description>Brera coding standards.</description>
+    <rule ref="PSR2"/>
+</ruleset>
