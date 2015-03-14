@@ -1,0 +1,29 @@
+<documentation title="GetMockBuilder Usage">
+    <standard>
+        <![CDATA[
+    If PHPUnit MockBuilder is used only to disable original constructor of mocked class getMock method with optional parameters must be used instead.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Correct disabling of original constructor.">
+            <![CDATA[
+$this->getMock(Foo::class, [], [], '', false);
+        ]]>
+        </code>
+        <code title="Valid: MockBuilder is used not only to disable original constructor.">
+            <![CDATA[
+$this->getMockBuilder(Foo::class)
+    ->disableOriginalConstructor()
+    ->setMockClassName('Foo')
+    ->getMock();
+        ]]>
+        </code>
+        <code title="Invalid: MockBuilder is used only to disable original constructor.">
+            <![CDATA[
+$this->getMockBuilder(Foo::class)
+    ->disableOriginalConstructor()
+    ->getMock();
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
