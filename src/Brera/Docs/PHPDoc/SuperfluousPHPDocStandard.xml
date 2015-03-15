@@ -1,0 +1,37 @@
+<documentation title="Superfluous PHPDoc">
+    <standard>
+        <![CDATA[
+    Function must only have PHPDoc if it ether has parameters, returns non void type or throws an exception.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: All required annotations are specified.">
+            <![CDATA[
+/**
+ * @param float $bar
+ * @return string
+ * @throws BarIsNotAnArrayException
+ */
+public function getFoo($bar)
+{
+    if (!is_float($bar)) {
+        throw new BarIsNotAnArrayException();
+    }
+
+    return 'foo';
+}
+        ]]>
+        </code>
+        <code title="Invalid: Superfluous PHPDoc.">
+            <![CDATA[
+/**
+ * @return void
+ */
+public function prepareFoo()
+{
+    $this->foo = 'foo';
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

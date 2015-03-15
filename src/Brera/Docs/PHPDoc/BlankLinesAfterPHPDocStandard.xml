@@ -1,0 +1,32 @@
+<documentation title="Blank lines between function and its PHPDoc">
+    <standard>
+        <![CDATA[
+    There must be no blank lines between function and its PHPDoc.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: No blank lines between function and its PHPDoc.">
+            <![CDATA[
+/**
+ * @return string
+ */
+public function getFoo()
+{
+    return 'foo';
+}
+        ]]>
+        </code>
+        <code title="Invalid: Blank line between function and its PHPDoc.">
+            <![CDATA[
+/**
+ * @return string
+ */
+
+public function getFoo()
+{
+    return 'foo';
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
