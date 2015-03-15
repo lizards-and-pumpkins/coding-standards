@@ -37,7 +37,7 @@ class Brera_Sniffs_PHPDoc_ArrayAnnotationSniff implements PHP_CodeSniffer_Sniff
             }
 
             if ('array' === $this->getNextAnnotationStringTokenContent($annotationIndex)) {
-                $this->file->addError('Function PHPDoc must not contain "array" annotations', $functionTokenIndex);
+                $this->file->addError('Function PHPDoc must not contain "array" annotations', $annotationIndex);
             }
         }
     }
