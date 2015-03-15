@@ -1,7 +1,7 @@
 <documentation title="Missing PHPDoc">
     <standard>
         <![CDATA[
-    Function must have PHPDoc if it ether has parameters, returns non void type or throws an exception.
+    Function must have PHPDoc if it either has parameters, returns non void type or throws an exception.
     ]]>
     </standard>
     <code_comparison>
