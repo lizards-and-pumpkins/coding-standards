@@ -1,0 +1,31 @@
+<documentation title="PHPDoc array annotation">
+    <standard>
+        <![CDATA[
+    PHPDoc array annotations must not contain abstract "array" reference.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Type of return array values is defined.">
+            <![CDATA[
+/**
+ * @return mixed[]
+ */
+public function getArrayOfMixedTypes()
+{
+    return ['foo', 1];
+}
+        ]]>
+        </code>
+        <code title="Invalid: No array type is defined.">
+            <![CDATA[
+/**
+ * @param array
+ */
+public function prepareData(array $fooArray)
+{
+    $this->foo = $fooArray;
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

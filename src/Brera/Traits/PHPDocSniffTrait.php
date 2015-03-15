@@ -22,16 +22,13 @@ trait Brera_Traits_PHPDocSniffTrait
             return false;
         }
 
-        $commentEndIndex = $this->getPhpDocEndTokenIndex($functionTokenIndex);
-        $commentStartIndex = $this->tokens[$commentEndIndex]['comment_opener'];
+        $functionPHPDocAnnotationsIndices = $this->getPHPDocAnnotationsIndices($functionTokenIndex);
 
-        if (empty($this->tokens[$commentStartIndex]['comment_tags'])) {
+        if (empty($functionPHPDocAnnotationsIndices)) {
             return false;
         }
 
-        $firstTagIndex = $this->tokens[$commentStartIndex]['comment_tags'][0];
-
-        return '@test' === $this->tokens[$firstTagIndex]['content'];
+        return '@test' === $this->tokens[$functionPHPDocAnnotationsIndices[0]]['content'];
     }
 
     /**
@@ -151,5 +148,21 @@ trait Brera_Traits_PHPDocSniffTrait
         $searchTypes = array_merge(PHP_CodeSniffer_Tokens::$methodPrefixes, [T_WHITESPACE]);
 
         return $this->file->findPrevious($searchTypes, $functionTokenIndex - 1, null, true);
+    }
+
+    /**
+     * @param int $functionTokenIndex
+     * @return int[]
+     */
+    private function getPHPDocAnnotationsIndices($functionTokenIndex)
+    {
+        $commentEndIndex = $this->getPhpDocEndTokenIndex($functionTokenIndex);
+        $commentStartIndex = $this->tokens[$commentEndIndex]['comment_opener'];
+
+        if (!isset($this->tokens[$commentStartIndex]['comment_tags'])) {
+            return [];
+        }
+
+        return $this->tokens[$commentStartIndex]['comment_tags'];
     }
 }
