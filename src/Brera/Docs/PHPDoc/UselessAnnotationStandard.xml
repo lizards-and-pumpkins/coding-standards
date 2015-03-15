@@ -1,7 +1,7 @@
 <documentation title="PHPDoc useless annotation">
     <standard>
         <![CDATA[
-    PHPDoc should not contain any annotations except @param, @return and/or @throws.
+    PHPDoc should not contain any annotations except @see, @param, @return and/or @throws.
     ]]>
     </standard>
     <code_comparison>
