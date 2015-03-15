@@ -22,13 +22,14 @@ trait Brera_Traits_PHPDocSniffTrait
             return false;
         }
 
+        $isTestAnnotationFound = false;
         $functionPHPDocAnnotationsIndices = $this->getPHPDocAnnotationsIndices($functionTokenIndex);
 
-        if (empty($functionPHPDocAnnotationsIndices)) {
-            return false;
+        while (!$isTestAnnotationFound && list(,$annotationIndex) = each($functionPHPDocAnnotationsIndices)) {
+            $isTestAnnotationFound = '@test' === $this->tokens[$annotationIndex]['content'];
         }
 
-        return '@test' === $this->tokens[$functionPHPDocAnnotationsIndices[0]]['content'];
+        return $isTestAnnotationFound;
     }
 
     /**
