@@ -39,7 +39,7 @@ class Brera_Sniffs_Tests_GetMockSniff implements PHP_CodeSniffer_Sniff
         if (!$this->isTokenAnEmptyArray($arguments[0]) ||
             !$this->isTokenAnEmptyArray($arguments[1]) ||
             !$this->isTokenAnEmptyString($arguments[2]) ||
-            'T_FALSE' !== $arguments[3]['type']
+            T_FALSE !== $arguments[3]['code']
         ) {
             $file->addError('getMock() method can be only used for disabling original constructor', $tokenIndex);
         }
@@ -104,7 +104,7 @@ class Brera_Sniffs_Tests_GetMockSniff implements PHP_CodeSniffer_Sniff
      */
     private function isTokenAnEmptyArray(array $token)
     {
-        if (!in_array($token['type'], ['T_OPEN_SHORT_ARRAY', 'T_ARRAY'])) {
+        if (!in_array($token['code'], [T_OPEN_SHORT_ARRAY, T_ARRAY])) {
             return false;
         }
 
@@ -125,6 +125,6 @@ class Brera_Sniffs_Tests_GetMockSniff implements PHP_CodeSniffer_Sniff
      */
     private function isTokenAnEmptyString(array $token)
     {
-        return 'T_CONSTANT_ENCAPSED_STRING' === $token['type'] && in_array($token['content'], ['\'\'', '""']);
+        return T_CONSTANT_ENCAPSED_STRING === $token['code'] && in_array($token['content'], ['\'\'', '""']);
     }
 }
