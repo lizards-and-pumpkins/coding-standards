@@ -5,18 +5,18 @@ trait Brera_Traits_PHPDocSniffTrait
     /**
      * @var PHP_CodeSniffer_File
      */
-    private $file;
+    protected $file;
 
     /**
      * @var mixed[]
      */
-    private $tokens;
+    protected $tokens;
 
     /**
      * @param int $functionTokenIndex
      * @return bool
      */
-    private function isTest($functionTokenIndex)
+    protected function isTest($functionTokenIndex)
     {
         if (!$this->phpDocExists($functionTokenIndex)) {
             return false;
@@ -35,7 +35,7 @@ trait Brera_Traits_PHPDocSniffTrait
      * @param int $functionTokenIndex
      * @return bool
      */
-    private function phpDocIsRequired($functionTokenIndex)
+    protected function phpDocIsRequired($functionTokenIndex)
     {
         return $this->functionReturnsNonVoid($functionTokenIndex) ||
                $this->functionHasParameters($functionTokenIndex) ||
@@ -46,11 +46,38 @@ trait Brera_Traits_PHPDocSniffTrait
      * @param $functionTokenIndex
      * @return bool
      */
-    private function phpDocExists($functionTokenIndex)
+    protected function phpDocExists($functionTokenIndex)
     {
         $commentEndIndex = $this->getPhpDocEndTokenIndex($functionTokenIndex);
 
         return T_DOC_COMMENT_CLOSE_TAG === $this->tokens[$commentEndIndex]['code'];
+    }
+
+    /**
+     * @param int $functionTokenIndex
+     * @return bool|int
+     */
+    protected function getPhpDocEndTokenIndex($functionTokenIndex)
+    {
+        $searchTypes = array_merge(PHP_CodeSniffer_Tokens::$methodPrefixes, [T_WHITESPACE]);
+
+        return $this->file->findPrevious($searchTypes, $functionTokenIndex - 1, null, true);
+    }
+
+    /**
+     * @param int $functionTokenIndex
+     * @return int[]
+     */
+    protected function getPHPDocAnnotationsIndices($functionTokenIndex)
+    {
+        $commentEndIndex = $this->getPhpDocEndTokenIndex($functionTokenIndex);
+        $commentStartIndex = $this->tokens[$commentEndIndex]['comment_opener'];
+
+        if (!isset($this->tokens[$commentStartIndex]['comment_tags'])) {
+            return [];
+        }
+
+        return $this->tokens[$commentStartIndex]['comment_tags'];
     }
 
     /**
@@ -137,32 +164,5 @@ trait Brera_Traits_PHPDocSniffTrait
         $searchTypes = array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, [T_WHITESPACE]);
 
         return (int) $this->file->findNext($searchTypes, $startTokenIndex, null, true);
-    }
-
-    /**
-     * @param int $functionTokenIndex
-     * @return bool|int
-     */
-    private function getPhpDocEndTokenIndex($functionTokenIndex)
-    {
-        $searchTypes = array_merge(PHP_CodeSniffer_Tokens::$methodPrefixes, [T_WHITESPACE]);
-
-        return $this->file->findPrevious($searchTypes, $functionTokenIndex - 1, null, true);
-    }
-
-    /**
-     * @param int $functionTokenIndex
-     * @return int[]
-     */
-    private function getPHPDocAnnotationsIndices($functionTokenIndex)
-    {
-        $commentEndIndex = $this->getPhpDocEndTokenIndex($functionTokenIndex);
-        $commentStartIndex = $this->tokens[$commentEndIndex]['comment_opener'];
-
-        if (!isset($this->tokens[$commentStartIndex]['comment_tags'])) {
-            return [];
-        }
-
-        return $this->tokens[$commentStartIndex]['comment_tags'];
     }
 }
