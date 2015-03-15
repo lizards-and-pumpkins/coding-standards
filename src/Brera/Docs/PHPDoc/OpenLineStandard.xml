@@ -5,7 +5,7 @@
     ]]>
     </standard>
     <code_comparison>
-        <code title="Valid: No content in front of closing comment tag.">
+        <code title="Valid: No content after open comment tag.">
             <![CDATA[
 /**
  * @return string
@@ -16,11 +16,11 @@ public function getFoo()
 }
         ]]>
         </code>
-        <code title="Invalid: Closing comment tag has leading comment on the same line.">
+        <code title="Invalid: Open comment tag has trailing content on the same line.">
             <![CDATA[
-/**
+/** bar
  * @return string
- bar */
+ */
 public function getFoo()
 {
     return 'foo';
