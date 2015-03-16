@@ -22,6 +22,22 @@ public function getFoo($bar)
 }
         ]]>
         </code>
+        <code title="Valid: Abstract method returns void.">
+            <![CDATA[
+/**
+ * @return void
+ */
+abstract protected function prepareFoo();
+        ]]>
+        </code>
+        <code title="Valid: Interface method returns void.">
+            <![CDATA[
+/**
+ * @return void
+ */
+public function prepareFoo();
+        ]]>
+        </code>
         <code title="Invalid: Superfluous PHPDoc.">
             <![CDATA[
 /**
