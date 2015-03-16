@@ -1,0 +1,28 @@
+<documentation title="Missing PHPDoc">
+    <standard>
+        <![CDATA[
+    Function must have PHPDoc if it either has parameters, returns non void type or throws an exception.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: All required annotations are specified.">
+            <![CDATA[
+/**
+ * @return string
+ */
+public function getFoo()
+{
+    return 'foo';
+}
+        ]]>
+        </code>
+        <code title="Invalid: Missing return annotation.">
+            <![CDATA[
+public function getFoo()
+{
+    return 'foo';
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

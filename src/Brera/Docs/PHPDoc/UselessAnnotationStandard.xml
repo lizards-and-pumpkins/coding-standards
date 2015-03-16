@@ -1,0 +1,33 @@
+<documentation title="PHPDoc useless annotation">
+    <standard>
+        <![CDATA[
+    PHPDoc should not contain any annotations except @see, @param, @return and/or @throws.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Only allowed annotations are defined.">
+            <![CDATA[
+/**
+ * @return string
+ */
+public function getFoo()
+{
+    return 'foo';
+}
+        ]]>
+        </code>
+        <code title="Invalid: PHPDoc contains comment and blank line.">
+            <![CDATA[
+/**
+ * PHPDoc should not contain comments or blanks lines
+ *
+ * @return string
+ */
+public function getFoo()
+{
+    return 'foo';
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>

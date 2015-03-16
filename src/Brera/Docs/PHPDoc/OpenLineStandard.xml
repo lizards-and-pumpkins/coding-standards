@@ -1,0 +1,31 @@
+<documentation title="PHPDoc open line">
+    <standard>
+        <![CDATA[
+    PHPDoc closing line must only content closing comment tag.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: No content after open comment tag.">
+            <![CDATA[
+/**
+ * @return string
+ */
+public function getFoo()
+{
+    return 'foo';
+}
+        ]]>
+        </code>
+        <code title="Invalid: Open comment tag has trailing content on the same line.">
+            <![CDATA[
+/** bar
+ * @return string
+ */
+public function getFoo()
+{
+    return 'foo';
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
