@@ -1,0 +1,24 @@
+<documentation title="GetMock Usage">
+    <standard>
+        <![CDATA[
+    If PHPUnit getMock method can be either used with first argument only or to disable original constructor.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Using getMock() with first argument only.">
+            <![CDATA[
+$this->getMock(Foo::class);
+        ]]>
+        </code>
+        <code title="Valid: Using getMock() to disable original constructor.">
+            <![CDATA[
+$this->getMock(Foo::class, [], [], '', false);
+        ]]>
+        </code>
+        <code title="Invalid: Using getMock() to disable original constructor and set mock class name.">
+            <![CDATA[
+$this->getMock(Foo::class, ['Foo'], [], '', false);
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
