@@ -41,7 +41,10 @@ class Brera_Sniffs_Tests_GetMockSniff implements PHP_CodeSniffer_Sniff
             !$this->isTokenAnEmptyString($arguments[2]) ||
             T_FALSE !== $arguments[3]['code']
         ) {
-            $file->addError('getMock() method can be only used for disabling original constructor', $tokenIndex);
+            $file->addError(
+                'Optional arguments of getMock() can be only used to disable original constructor',
+                $tokenIndex
+            );
         }
     }
 
