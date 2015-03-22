@@ -1,7 +1,5 @@
 <?php
 
-require_once 'SniffTest.php';
-
 class GetMockSniffTest extends SniffTest
 {
     /**
