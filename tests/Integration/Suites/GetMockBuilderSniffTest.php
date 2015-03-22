@@ -1,34 +1,15 @@
 <?php
 
-class GetMockBuilderSniffTest extends \PHPUnit_Framework_TestCase
+require_once 'SniffTest.php';
+
+class GetMockBuilderSniffTest extends SniffTest
 {
     /**
-     * @var PHP_CodeSniffer
+     * @return string
      */
-    private $sniffer;
-
-    /**
-     * @var string[]
-     */
-    private $originalArgs;
-
-    protected function setUp()
+    protected final function getFileUnderTest()
     {
-        if (!defined('PHP_CODESNIFFER_IN_TESTS')) {
-            define('PHP_CODESNIFFER_IN_TESTS', true);
-        }
-
-        $this->originalArgs = $_SERVER['argv'];
-        $_SERVER['argv'] = [];
-
-        $this->sniffer = new PHP_CodeSniffer();
-        $this->sniffer->registerSniffs(['../../src/Brera/Sniffs/Tests/GetMockBuilderSniff.php'], '');
-        $this->sniffer->populateTokenListeners();
-    }
-
-    protected function tearDown()
-    {
-        $_SERVER['argv'] = $this->originalArgs;
+        return '../../src/Brera/Sniffs/Tests/GetMockBuilderSniff.php';
     }
 
     /**
@@ -68,29 +49,5 @@ class GetMockBuilderSniffTest extends \PHPUnit_Framework_TestCase
         $errors = $phpCSFile->getErrors();
 
         $this->assertEmpty($errors);
-    }
-
-    /**
-     * @param array[] $errors
-     * @return string
-     */
-    private function getFirstErrorMessage(array $errors)
-    {
-        $error = array_shift($errors);
-        if (!is_array($error)) {
-            return '';
-        }
-
-        $error = array_shift($error);
-        if (!is_array($error)) {
-            return '';
-        }
-
-        $error = array_shift($error);
-        if (!is_array($error) || !isset($error['message'])) {
-            return '';
-        }
-
-        return $error['message'];
     }
 }
