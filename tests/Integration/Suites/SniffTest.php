@@ -5,7 +5,7 @@ abstract class SniffTest extends \PHPUnit_Framework_TestCase
     /**
      * @var PHP_CodeSniffer
      */
-    protected $sniffer;
+    private $sniffer;
 
     /**
      * @var string[]
@@ -35,6 +35,19 @@ abstract class SniffTest extends \PHPUnit_Framework_TestCase
      * @return string
      */
     abstract protected function getFileUnderTest();
+
+    /**
+     * @param string $code
+     * @return PHP_CodeSniffer_File
+     */
+    protected final function processCode($code)
+    {
+        if ('<?php ' !== substr($code, 0, 6)) {
+            $code = '<?php ' . $code;
+        }
+
+        return $this->sniffer->processFile('STDIN', $code);
+    }
 
     /**
      * @param array[] $errors
