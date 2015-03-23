@@ -1,7 +1,8 @@
 <documentation title="Superfluous PHPDoc">
     <standard>
         <![CDATA[
-    Function must only have PHPDoc if it ether has parameters, returns non void type or throws an exception.
+    Function must only have PHPDoc if it either has at least one untyped parameter, returns non void or throws an
+    exception.
     ]]>
     </standard>
     <code_comparison>
@@ -46,6 +47,17 @@ public function prepareFoo();
 public function prepareFoo()
 {
     $this->foo = 'foo';
+}
+        ]]>
+        </code>
+        <code title="Invalid: Function has only typed parameters.">
+            <![CDATA[
+/**
+ * @param Foo $foo
+ */
+public function prepareFoo(Foo $foo)
+{
+    $this->foo = $foo;
 }
         ]]>
         </code>

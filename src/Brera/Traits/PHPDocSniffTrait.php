@@ -39,7 +39,7 @@ trait Brera_Traits_PHPDocSniffTrait
     protected function phpDocIsRequired($functionTokenIndex)
     {
         return $this->functionReturnsNonVoid($functionTokenIndex) ||
-               $this->functionHasParameters($functionTokenIndex) ||
+               $this->functionHasUntypedParameters($functionTokenIndex) ||
                $this->functionThrowsAnException($functionTokenIndex);
     }
 
@@ -113,11 +113,21 @@ trait Brera_Traits_PHPDocSniffTrait
      * @param int $functionTokenIndex
      * @return bool
      */
-    private function functionHasParameters($functionTokenIndex)
+    private function functionHasUntypedParameters($functionTokenIndex)
     {
         $functionParameters = $this->file->getMethodParameters($functionTokenIndex);
 
-        return !empty($functionParameters);
+        if (empty($functionParameters)) {
+            return false;
+        }
+
+        $hasUntypedParameter = false;
+
+        while (!$hasUntypedParameter && list(, $parameter)= each($functionParameters)) {
+            $hasUntypedParameter = empty($parameter['type_hint']);
+        }
+
+        return $hasUntypedParameter;
     }
 
     /**

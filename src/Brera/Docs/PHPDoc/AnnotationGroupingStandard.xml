@@ -1,0 +1,35 @@
+<documentation title="PHPDoc annotations grouping">
+    <standard>
+        <![CDATA[
+    PHPDoc annotations must be grouped by type.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Annotations are grouped by type.">
+            <![CDATA[
+/**
+ * @param string $bar
+ * @param string $baz
+ * @return string
+ */
+public function getFoo($bar, $baz)
+{
+    return 'foo';
+}
+        ]]>
+        </code>
+        <code title="Invalid: Annotations are mixed.">
+            <![CDATA[
+/**
+ * @param string $bar
+ * @return string
+ * @param string $baz
+ */
+public function getFoo($bar, $baz)
+{
+    return 'foo';
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
