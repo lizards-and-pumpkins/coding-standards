@@ -40,4 +40,31 @@ class MissingPHPDocSniffTest extends SniffTest
 
         $this->assertEquals($expectedError, $error);
     }
+
+    /**
+     * @test
+     */
+    public function itShouldAddAnErrorIfPHPDocHasAtLeastOneUntypedArgument()
+    {
+        $code = 'public function prepareData(array $data) { }';
+
+        $phpCSFile = $this->processCode($code);
+        $error = $this->getFirstErrorMessage($phpCSFile->getErrors());
+        $expectedError = 'Missing PHPDoc';
+
+        $this->assertEquals($expectedError, $error);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldNotAddAnyErrorsIfPHPDocContainsFromOnlyTypedArguments()
+    {
+        $code = 'public function prepareFoo(Foo $foo) { }';
+
+        $phpCSFile = $this->processCode($code);
+        $errors = $phpCSFile->getErrors();
+
+        $this->assertEmpty($errors);
+    }
 }

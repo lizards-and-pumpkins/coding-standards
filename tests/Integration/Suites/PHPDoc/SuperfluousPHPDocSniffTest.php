@@ -45,8 +45,7 @@ class SuperfluousPHPDocSniffTest extends SniffTest
         /**
          * @return void
          */
-        abstract protected function prepareFoo();
-';
+        abstract protected function prepareFoo();';
 
         $phpCSFile = $this->processCode($code);
         $errors = $phpCSFile->getErrors();
@@ -63,8 +62,7 @@ class SuperfluousPHPDocSniffTest extends SniffTest
         /**
          * @return void
          */
-        public function prepareFoo();
-';
+        public function prepareFoo();';
 
         $phpCSFile = $this->processCode($code);
         $errors = $phpCSFile->getErrors();
@@ -81,11 +79,42 @@ class SuperfluousPHPDocSniffTest extends SniffTest
         /**
          * @return void
          */
-        public function prepareFoo()
-        {
-            $this->foo = "foo";
-        }
-';
+        public function prepareFoo() { }';
+
+        $phpCSFile = $this->processCode($code);
+        $error = $this->getFirstErrorMessage($phpCSFile->getErrors());
+        $expectedError = 'Superfluous PHPDoc';
+
+        $this->assertEquals($expectedError, $error);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldNotAddAnyErrorsIfPHPDocHasAtLeastOneUntypedArgument()
+    {
+        $code = '
+        /**
+         * @param mixed[] $data
+         */
+        public function prepareData(array $data) { }';
+
+        $phpCSFile = $this->processCode($code);
+        $errors = $phpCSFile->getErrors();
+
+        $this->assertEmpty($errors);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAddAnErrorIfPHPDocContainsFromOnlyTypedArguments()
+    {
+        $code = '
+        /**
+         * @param Foo $foo
+         */
+        public function prepareFoo(Foo $foo) { }';
 
         $phpCSFile = $this->processCode($code);
         $error = $this->getFirstErrorMessage($phpCSFile->getErrors());

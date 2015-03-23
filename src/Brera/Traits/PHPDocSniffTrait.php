@@ -124,7 +124,7 @@ trait Brera_Traits_PHPDocSniffTrait
         $hasUntypedParameter = false;
 
         while (!$hasUntypedParameter && list(, $parameter)= each($functionParameters)) {
-            $hasUntypedParameter = empty($parameter['type_hint']);
+            $hasUntypedParameter = empty($parameter['type_hint']) || 'array' === $parameter['type_hint'];
         }
 
         return $hasUntypedParameter;
