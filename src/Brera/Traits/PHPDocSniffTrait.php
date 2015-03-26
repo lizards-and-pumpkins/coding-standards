@@ -16,7 +16,7 @@ trait Brera_Traits_PHPDocSniffTrait
      * @param int $functionTokenIndex
      * @return bool
      */
-    protected function isTest($functionTokenIndex)
+    final protected function isTest($functionTokenIndex)
     {
         if (!$this->phpDocExists($functionTokenIndex)) {
             return false;
@@ -36,7 +36,7 @@ trait Brera_Traits_PHPDocSniffTrait
      * @param int $functionTokenIndex
      * @return bool
      */
-    protected function phpDocIsRequired($functionTokenIndex)
+    final protected function phpDocIsRequired($functionTokenIndex)
     {
         return $this->functionReturnsNonVoid($functionTokenIndex) ||
                $this->functionHasUntypedParameters($functionTokenIndex) ||
@@ -47,7 +47,7 @@ trait Brera_Traits_PHPDocSniffTrait
      * @param $functionTokenIndex
      * @return bool
      */
-    protected function phpDocExists($functionTokenIndex)
+    final protected function phpDocExists($functionTokenIndex)
     {
         $commentEndIndex = $this->getPhpDocEndTokenIndex($functionTokenIndex);
 
@@ -58,7 +58,7 @@ trait Brera_Traits_PHPDocSniffTrait
      * @param int $functionTokenIndex
      * @return bool|int
      */
-    protected function getPhpDocEndTokenIndex($functionTokenIndex)
+    final protected function getPhpDocEndTokenIndex($functionTokenIndex)
     {
         $searchTypes = array_merge(PHP_CodeSniffer_Tokens::$methodPrefixes, [T_WHITESPACE]);
 
@@ -69,7 +69,7 @@ trait Brera_Traits_PHPDocSniffTrait
      * @param int $functionTokenIndex
      * @return int[]
      */
-    protected function getPHPDocAnnotationsIndices($functionTokenIndex)
+    final protected function getPHPDocAnnotationsIndices($functionTokenIndex)
     {
         $commentEndIndex = $this->getPhpDocEndTokenIndex($functionTokenIndex);
         $commentStartIndex = $this->tokens[$commentEndIndex]['comment_opener'];
