@@ -17,7 +17,7 @@ $this->getMock(Foo::class, [], [], '', false);
         </code>
         <code title="Invalid: Using getMock() to disable original constructor and set mock class name.">
             <![CDATA[
-$this->getMock(Foo::class, ['Foo'], [], '', false);
+$this->getMock(Foo::class, [], ['Foo'], '', false);
         ]]>
         </code>
     </code_comparison>
