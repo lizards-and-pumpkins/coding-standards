@@ -1,7 +1,8 @@
 <documentation title="Number of typed arguments">
     <standard>
         <![CDATA[
-    It is not recommended that function receives more than 3 objects as arguments
+    Requiring more then 3 objects is a sign of too much coupling or transient dependencies. Consider refactoring the
+       method into several smaller, more specialized ones, if possible.
     ]]>
     </standard>
     <code_comparison>
