@@ -1,0 +1,25 @@
+<documentation title="Number of typed arguments">
+    <standard>
+        <![CDATA[
+    It is not recommended that function receives more than 3 objects as arguments
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Function receives less then 4 objects as arguments.">
+            <![CDATA[
+public function processData(Foo $foo, array $array, Bar $bar, Baz $baz, $someUntypedVariable)
+{
+
+}
+        ]]>
+        </code>
+        <code title="Invalid: Function receives more then 3 objects as arguments.">
+            <![CDATA[
+public function processData(Foo $foo, Bar $bar, Baz $baz, $someUntypedVariable, Qux $qux)
+{
+
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
