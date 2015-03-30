@@ -34,7 +34,7 @@ class ArrayAnnotationSniffTest extends SniffTest
     {
         $code = '
         /**
-         * @param array
+         * @param array $fooArray
          */
         public function prepareData(array $fooArray) { }';
 
