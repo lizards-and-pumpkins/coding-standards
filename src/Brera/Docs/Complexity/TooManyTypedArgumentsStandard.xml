@@ -1,0 +1,26 @@
+<documentation title="Number of typed arguments">
+    <standard>
+        <![CDATA[
+    Requiring more then 3 objects is a sign of too much coupling or transient dependencies. Consider refactoring the
+       method into several smaller, more specialized ones, if possible.
+    ]]>
+    </standard>
+    <code_comparison>
+        <code title="Valid: Function receives less then 4 objects as arguments.">
+            <![CDATA[
+public function processData(Foo $foo, array $array, Bar $bar, Baz $baz, $someUntypedVariable)
+{
+
+}
+        ]]>
+        </code>
+        <code title="Invalid: Function receives more then 3 objects as arguments.">
+            <![CDATA[
+public function processData(Foo $foo, Bar $bar, Baz $baz, $someUntypedVariable, Qux $qux)
+{
+
+}
+        ]]>
+        </code>
+    </code_comparison>
+</documentation>
