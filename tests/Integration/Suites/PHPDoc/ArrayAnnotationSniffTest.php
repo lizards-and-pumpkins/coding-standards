@@ -30,13 +30,31 @@ class ArrayAnnotationSniffTest extends SniffTest
     /**
      * @test
      */
-    public function itShouldAddAnErrorIfArrayIsAnnotatedImplicitly()
+    public function itShouldAddAnErrorIfArrayParameterIsAnnotatedImplicitly()
     {
         $code = '
         /**
          * @param array $fooArray
          */
         public function prepareData(array $fooArray) { }';
+
+        $phpCSFile = $this->processCode($code);
+        $error = $this->getFirstErrorMessage($phpCSFile->getErrors());
+        $expectedError = 'Function PHPDoc must not contain "array" annotations';
+
+        $this->assertEquals($expectedError, $error);
+    }
+
+    /**
+     * @test
+     */
+    public function itShouldAddAnErrorIfArrayReturnIsAnnotatedImplicitly()
+    {
+        $code = '
+        /**
+         * @return array
+         */
+        public function getFooArray() { return [] }';
 
         $phpCSFile = $this->processCode($code);
         $error = $this->getFirstErrorMessage($phpCSFile->getErrors());
