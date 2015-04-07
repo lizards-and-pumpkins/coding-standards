@@ -4,6 +4,31 @@
 class Brera_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer_Sniff
 {
     /**
+     * @var mixed[]
+     */
+    private $assertFramesBefore = [
+        ['content' => '->'],
+    ];
+
+    /**
+     * @var mixed[]
+     */
+    private $assertFramesAfter = [
+        ['content' => '('],
+        ['code' => T_VARIABLE, 'content' => '$this'],
+        ['content' => '->'],
+        ['code' => T_STRING, 'content' => 'any'],
+        ['content' => '('],
+        ['content' => ')'],
+        ['content' => ')'],
+    ];
+
+    /**
+     * @var string
+     */
+    private $message = 'Setting expects($this->any()) on mocks can (and should) be omitted since PHPUnit version 4';
+
+    /**
      * @var int
      */
     private $tokenIndex;
@@ -11,33 +36,7 @@ class Brera_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer_Sniff
     /**
      * @var array[]
      */
-    private $tokens;
-
-    /**
-     * @var mixed[]
-     */
-    private $assertFramesBefore = [
-        ['code' => T_VARIABLE],
-        ['code' => T_OBJECT_OPERATOR],
-    ];
-
-    /**
-     * @var mixed[]
-     */
-    private $assertFramesAfter = [
-        ['code' => T_OPEN_PARENTHESIS],
-        ['code' => T_VARIABLE, 'content' => '$this'],
-        ['code' => T_OBJECT_OPERATOR],
-        ['code' => T_STRING, 'content' => 'any'],
-        ['code' => T_OPEN_PARENTHESIS],
-        ['code' => T_CLOSE_PARENTHESIS],
-        ['code' => T_CLOSE_PARENTHESIS],
-    ];
-    
-    /**
-     * @var string
-     */
-    private $message = 'Setting expects{$this->any()) on mocks can (and should) be omitted since PHPUnit version 4';
+    private $tokenStack;
 
     /**
      * @return int[]
@@ -49,21 +48,20 @@ class Brera_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer_Sniff
 
     /**
      * @param PHP_CodeSniffer_File $file
-     * @param int $tokenIndex
+     * @param int $tokenStackIndex
      */
-    public function process(PHP_CodeSniffer_File $file, $tokenIndex)
+    public function process(PHP_CodeSniffer_File $file, $tokenStackIndex)
     {
-        $this->tokenIndex = $tokenIndex;
-        $this->tokens = $file->getTokens();
-        
-        if (! $this->isMatchesExpectsAnyMethodCall()) {
+        $this->tokenIndex = $tokenStackIndex;
+        $this->tokenStack = $file->getTokens();
+
+        if (!$this->isMatchesExpectsAnyMethodCall()) {
             return;
         }
-        
         $canFix = $this->addWarningMessage($file);
 
-        if ($canFix === true) {
-            $this->removeExpectsAnyIfFixerEnabled($file);
+        if (true === $canFix) {
+            $this->removeExpectsAnyTokensIfEnabled($file);
         }
     }
 
@@ -72,14 +70,12 @@ class Brera_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer_Sniff
      */
     private function isMatchesExpectsAnyMethodCall()
     {
-        if ('expects' !== $this->tokens[$this->tokenIndex]['content']) {
+        if ('expects' !== $this->tokenStack[$this->tokenIndex]['content']) {
             return false;
         }
-        if (!$this->matchesStackBefore($this->assertFramesBefore)) {
-            return false;
-        }
-
-        if (!$this->matchesStackAfter($this->assertFramesAfter)) {
+        $matchStartIndex = $this->getStartIndexIfMatches($this->assertFramesBefore);
+        $matchEndIndex = $this->getEndIndexIfMatches($this->assertFramesAfter);
+        if (false === $matchStartIndex || false === $matchEndIndex) {
             return false;
         }
         return true;
@@ -87,77 +83,87 @@ class Brera_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer_Sniff
 
     /**
      * @param array[] $assertBefore
-     * @param int|null $stackIndex
      * @return bool
      */
-    private function matchesStackBefore(array $assertBefore, $stackIndex = null)
+    private function getStartIndexIfMatches(array $assertBefore)
     {
-        if (empty($assertBefore)) {
-            return true;
-        }
-        $index = is_null($stackIndex) ? $this->tokenIndex - 1 : $stackIndex;
-        $frameSpec = array_slice($assertBefore, -1)[0];
-        if ($index < 0 || !$this->matchesFrame($frameSpec, $this->tokens[$index])) {
-            return false;
-        }
-        return $this->matchesStackBefore(array_slice($assertBefore, 0, -1), $index - 1);
+        $finder = $this->getMatchingIndexFinder('backward');
+        return $finder(array_reverse($assertBefore));
     }
 
     /**
      * @param array[] $assertAfter
-     * @param int|null $stackIndex
      * @return bool
      */
-    private function matchesStackAfter(array $assertAfter, $stackIndex = null)
+    private function getEndIndexIfMatches(array $assertAfter)
     {
-        if (empty($assertAfter)) {
-            return true;
-        }
-        $index = is_null($stackIndex) ? $this->tokenIndex + 1 : $stackIndex;
-        if (!isset($this->tokens[$index]) || !$this->matchesFrame($assertAfter[0], $this->tokens[$index])) {
-            return false;
-        }
-        return $this->matchesStackAfter(array_slice($assertAfter, 1), $index + 1);
+        $finder = $this->getMatchingIndexFinder('forward');
+        return $finder($assertAfter);
     }
 
     /**
-     * @param mixed[] $frameSpec
-     * @param mixed[] $frameToCheck
-     * @return bool
+     * @param string $direction
+     * @return callable
      */
-    private function matchesFrame(array $frameSpec, array $frameToCheck)
+    private function getMatchingIndexFinder($direction = 'forward')
     {
-        foreach ($frameSpec as $key => $value) {
-            if (!isset($frameToCheck[$key])) {
+        $op = 'backward' === $direction ? -1 : 1;
+        
+        $finder = function (array $frameSpecList, $stackIndex = null) use ($op, &$finder) {
+            if (empty($frameSpecList)) {
+                $foundMatchingIndex = is_null($stackIndex) ? $this->tokenIndex : $stackIndex - $op;
+                return $foundMatchingIndex;
+            }
+            $index = is_null($stackIndex) ? $this->tokenIndex + $op : $stackIndex;
+            if ($index < 0 || !isset($this->tokenStack[$index])) {
                 return false;
             }
-            if ($frameToCheck[$key] !== $value) {
+            $nextTokenIndex = $index + $op;
+            if ($this->isWhitespace($index)) {
+                return $finder($frameSpecList, $nextTokenIndex);
+            }
+            if (!$this->isMatchingFrame($frameSpecList[0], $this->tokenStack[$index])) {
+                return false;
+            }
+            return $finder(array_slice($frameSpecList, 1), $nextTokenIndex);
+        };
+        return $finder;
+    }
+
+    /**
+     * @param mixed[] $tokenSpec
+     * @param mixed[] $tokenToCheck
+     * @return bool
+     */
+    private function isMatchingFrame(array $tokenSpec, array $tokenToCheck)
+    {
+        foreach ($tokenSpec as $key => $value) {
+            if (!isset($tokenToCheck[$key])) {
+                return false;
+            }
+            if ($tokenToCheck[$key] !== $value) {
                 return false;
             }
         }
         return true;
     }
 
-    private function removeExpectsAnyIfFixerEnabled(PHP_CodeSniffer_File $file)
+    /**
+     * @param int $tokenIndex
+     * @return bool
+     */
+    private function isWhitespace($tokenIndex)
     {
-        if ($this->autoFixWouldProduceValidPHP()) {
-            return;
-        }
-        if ($file->fixer->enabled === true) {
-            $file->fixer->beginChangeset();
-            $this->applyAutoFixChangeSet($file);
-            $file->fixer->endChangeset();
-        }
+        return isset($this->tokenStack[$tokenIndex]) && $this->tokenStack[$tokenIndex]['type'] === 'T_WHITESPACE';
     }
 
     /**
+     * @param int $tokenIndex
      * @return bool
      */
-    private function autoFixWouldProduceValidPHP()
+    private function isNewline($tokenIndex)
     {
-        $indexOfTokenAfterExpectsAny = count($this->assertFramesAfter) +1;
-        $allowedNextTokens = [';', '->'];
-        return in_array($this->tokens[$indexOfTokenAfterExpectsAny]['content'], $allowedNextTokens);
+        return isset($this->tokenStack[$tokenIndex]) && $this->tokenStack[$tokenIndex]['content'] === PHP_EOL;
     }
 
     /**
@@ -169,12 +175,35 @@ class Brera_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer_Sniff
         return $file->addFixableWarning($this->message, $this->tokenIndex, '', [], 0);
     }
 
-    private function applyAutoFixChangeSet(PHP_CodeSniffer_File $file)
+    private function removeExpectsAnyTokensIfEnabled(PHP_CodeSniffer_File $file)
     {
-        $firstTokenOfChangeSet = $this->tokenIndex - 1;
-        $lastTokenOfChangeSet = $this->tokenIndex + 7;
-        for ($i = $firstTokenOfChangeSet; $i <= $lastTokenOfChangeSet; $i++) {
+        if (true === $file->fixer->enabled) {
+            $file->fixer->beginChangeset();
+            $this->removeExpectsAnyTokens($file);
+            $file->fixer->endChangeset();
+        }
+    }
+
+    private function removeExpectsAnyTokens(PHP_CodeSniffer_File $file)
+    {
+        $matchStartIndex = $this->getStartIndexIfMatches($this->assertFramesBefore);
+        $matchEndIndex = $this->getEndIndexIfMatches($this->assertFramesAfter);
+        for ($i = $matchStartIndex; $i <= $matchEndIndex; $i++) {
             $file->fixer->replaceToken($i, '');
+        }
+        $this->ifNewLineMoveNextLineUp($matchEndIndex+1, $file);
+    }
+
+    /**
+     * @param int $index
+     * @param PHP_CodeSniffer_File $file
+     */
+    private function ifNewLineMoveNextLineUp($index, PHP_CodeSniffer_File $file)
+    {
+        if ($this->isNewline($index)) {
+            while ($this->isWhitespace($index)) {
+                $file->fixer->replaceToken($index++, '');
+            }
         }
     }
 }
