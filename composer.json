@@ -18,6 +18,7 @@
     ],
     "autoload": {
         "classmap": [
+            "src/Brera/Traits/PHPDocSniffTrait.php",
             "tests/Integration/Suites/SniffTest.php"
         ]
     },
