@@ -23,6 +23,6 @@ class Brera_Sniffs_Array_ArrayPushSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $file->addError('array_push() is disallowed.', $functionTokenIndex);
+        $file->addError('array_push() is disallowed. Use assignment instead.', $functionTokenIndex);
     }
 }

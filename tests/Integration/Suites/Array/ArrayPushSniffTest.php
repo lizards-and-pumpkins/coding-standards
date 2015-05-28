@@ -33,6 +33,6 @@ class ArrayPushSniffTest extends SniffTest
         $phpCSFile = $this->processCode($code);
         $result = $this->getFirstErrorMessage($phpCSFile->getErrors());
 
-        $this->assertEquals('array_push() is disallowed.', $result);
+        $this->assertEquals('array_push() is disallowed. Use assignment instead.', $result);
     }
 }
