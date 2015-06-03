@@ -22,12 +22,12 @@ class Brera_Sniffs_Tests_GetMockBuilderSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        $nextStringTokenIndex = $file->findNext(T_STRING, $tokenIndex + 1);
+        $nextStringTokenIndex = $this->getNextStringTokenIndexIgnoringMethodArguments($file, $tokenIndex);
         if ('disableOriginalConstructor' !== $tokens[$nextStringTokenIndex]['content']) {
             return;
         }
 
-        $nextStringTokenIndex = $file->findNext(T_STRING, $nextStringTokenIndex + 1);
+        $nextStringTokenIndex = $this->getNextStringTokenIndexIgnoringMethodArguments($file, $nextStringTokenIndex);
         if ('getMock' !== $tokens[$nextStringTokenIndex]['content']) {
             return;
         }
@@ -36,5 +36,16 @@ class Brera_Sniffs_Tests_GetMockBuilderSniff implements PHP_CodeSniffer_Sniff
             'getMock(Foo::class, [], [], \'\', false) must be used for disabling original constructor',
             $tokenIndex
         );
+    }
+
+    /**
+     * @param PHP_CodeSniffer_File $file
+     * @param int $fromTokenIndex
+     * @return bool|int
+     */
+    private function getNextStringTokenIndexIgnoringMethodArguments(PHP_CodeSniffer_File $file, $fromTokenIndex)
+    {
+        $nextClosingParenthesesTokenIndex = $file->findNext(T_CLOSE_PARENTHESIS, $fromTokenIndex + 1);
+        return $file->findNext(T_STRING, $nextClosingParenthesesTokenIndex + 1);
     }
 }

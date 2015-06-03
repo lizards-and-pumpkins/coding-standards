@@ -15,7 +15,7 @@ class GetMockBuilderSniffTest extends SniffTest
      */
     public function itShouldAddAnErrorIfMockBuilderIsUsedToDisableOriginalConstructor()
     {
-        $code = '$mock = $this->getMockBuilder()->disableOriginalConstructor()->getMock();';
+        $code = '$mock = $this->getMockBuilder(Foo::class)->disableOriginalConstructor()->getMock();';
 
         $phpCSFile = $this->processCode($code);
 
