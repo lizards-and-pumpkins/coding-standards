@@ -40,7 +40,7 @@ abstract class SniffTest extends \PHPUnit_Framework_TestCase
      * @param string $code
      * @return PHP_CodeSniffer_File
      */
-    protected final function processCode($code)
+    final protected function processCode($code)
     {
         if ('<?php ' !== substr($code, 0, 6)) {
             $code = '<?php ' . $code;
@@ -53,7 +53,7 @@ abstract class SniffTest extends \PHPUnit_Framework_TestCase
      * @param array[] $errors
      * @return string
      */
-    protected final function getFirstErrorMessage(array $errors)
+    final protected function getFirstErrorMessage(array $errors)
     {
         $error = array_shift($errors);
         if (!is_array($error)) {
