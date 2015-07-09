@@ -10,10 +10,7 @@ class ArrayPushSniffTest extends SniffTest
         return '../../src/Brera/Sniffs/Array/ArrayPushSniff.php';
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnErrorIfArrayPushIsNotFound()
+    public function testNoErrorsAddedIfArrayPushIsNotFound()
     {
         $code = '$foo = time()';
 
@@ -23,10 +20,7 @@ class ArrayPushSniffTest extends SniffTest
         $this->assertEmpty($errors);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldAddAnErrorIfArrayPushIsUsed()
+    public function testErrorIsAddedIfArrayPushIsUsed()
     {
         $code = 'array_push($foo, 1)';
 

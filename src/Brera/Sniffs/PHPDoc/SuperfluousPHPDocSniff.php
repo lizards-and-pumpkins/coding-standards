@@ -21,10 +21,6 @@ class Brera_Sniffs_PHPDoc_SuperfluousPHPDocSniff implements PHP_CodeSniffer_Snif
         $this->file = $file;
         $this->tokens = $file->getTokens();
 
-        if ($this->isTest($functionTokenIndex)) {
-            return;
-        }
-
         if (!$this->phpDocIsRequired($functionTokenIndex) && $this->phpDocExists($functionTokenIndex)) {
             $this->file->addError('Superfluous PHPDoc', $functionTokenIndex);
         }

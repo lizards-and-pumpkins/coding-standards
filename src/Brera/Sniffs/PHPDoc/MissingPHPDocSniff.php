@@ -21,10 +21,6 @@ class Brera_Sniffs_PHPDoc_MissingPHPDocSniff implements PHP_CodeSniffer_Sniff
         $this->file = $file;
         $this->tokens = $file->getTokens();
 
-        if ($this->isTest($functionTokenIndex)) {
-            return;
-        }
-
         if ($this->phpDocIsRequired($functionTokenIndex) && !$this->phpDocExists($functionTokenIndex)) {
             $this->file->addError('Missing PHPDoc', $functionTokenIndex);
         }

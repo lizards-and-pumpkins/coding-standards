@@ -10,10 +10,7 @@ class BlankLinesAfterPHPDocSniffTest extends SniffTest
         return '../../src/Brera/Sniffs/PHPDoc/BlankLinesAfterPHPDocSniff.php';
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnyErrorsIfFunctionAndItsAnnotationHaveNoBlankLinesInBetween()
+    public function testNoErrorsAddedIfFunctionAndItsAnnotationHaveNoBlankLinesInBetween()
     {
         $code = '
         /**
@@ -27,10 +24,7 @@ class BlankLinesAfterPHPDocSniffTest extends SniffTest
         $this->assertEmpty($errors);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldAddAnErrorIfFunctionAndItsAnnotationHaveHasBlankLinesInBetween()
+    public function testErrorIsAddedIfFunctionAndItsAnnotationHaveHasBlankLinesInBetween()
     {
         $code = '
         /**

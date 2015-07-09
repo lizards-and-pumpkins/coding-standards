@@ -10,10 +10,7 @@ class SuperfluousPHPDocSniffTest extends SniffTest
         return '../../src/Brera/Sniffs/PHPDoc/SuperfluousPHPDocSniff.php';
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnyErrorsIfAnnotationsAreRequiredAndSpecified()
+    public function testNoErrorsAddedIfAnnotationsAreRequiredAndSpecified()
     {
         $code = '
         /**
@@ -36,10 +33,7 @@ class SuperfluousPHPDocSniffTest extends SniffTest
         $this->assertEmpty($errors);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnyErrorsIfMethodIsAbstractAndReturnTypeIsSpecified()
+    public function testNoErrorsAddedIfMethodIsAbstractAndReturnTypeIsSpecified()
     {
         $code = '
         /**
@@ -53,10 +47,7 @@ class SuperfluousPHPDocSniffTest extends SniffTest
         $this->assertEmpty($errors);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnyErrorsIfMethodIsAnInterfaceAndReturnTypeIsSpecified()
+    public function testNoErrorsAddedIfMethodIsAnInterfaceAndReturnTypeIsSpecified()
     {
         $code = '
         /**
@@ -70,10 +61,7 @@ class SuperfluousPHPDocSniffTest extends SniffTest
         $this->assertEmpty($errors);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldAddAnErrorIfFunctionDoesNotRequireAnAnnotationButOneIsSpecified()
+    public function testErrorIsAddedIfFunctionDoesNotRequireAnAnnotationButOneIsSpecified()
     {
         $code = '
         /**
@@ -88,10 +76,7 @@ class SuperfluousPHPDocSniffTest extends SniffTest
         $this->assertEquals($expectedError, $error);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnyErrorsIfPHPDocHasAtLeastOneUntypedArgument()
+    public function testNoErrorsAddedIfPHPDocHasAtLeastOneUntypedArgument()
     {
         $code = '
         /**
@@ -105,10 +90,7 @@ class SuperfluousPHPDocSniffTest extends SniffTest
         $this->assertEmpty($errors);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldAddAnErrorIfPHPDocContainsFromOnlyTypedArguments()
+    public function testErrorIsAddedIfPHPDocContainsFromOnlyTypedArguments()
     {
         $code = '
         /**

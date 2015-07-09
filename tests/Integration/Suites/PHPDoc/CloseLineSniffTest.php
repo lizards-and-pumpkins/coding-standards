@@ -10,10 +10,7 @@ class CloseLineSniffTest extends SniffTest
         return '../../src/Brera/Sniffs/PHPDoc/CloseLineSniff.php';
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnyErrorsIfAnnotationClosingTagHasNothingInFrontOfIt()
+    public function testNoErrorsAddedIfAnnotationClosingTagHasNothingInFrontOfIt()
     {
         $code = '
         /**
@@ -27,10 +24,7 @@ class CloseLineSniffTest extends SniffTest
         $this->assertEmpty($errors);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldAddAnErrorIfAnnotationClosingTagHasContentInFrontOfIt()
+    public function testErrorIsAddedIfAnnotationClosingTagHasContentInFrontOfIt()
     {
         $code = '
         /**

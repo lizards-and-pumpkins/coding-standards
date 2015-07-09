@@ -10,10 +10,7 @@ class TooManyTypedArgumentsSniffTest extends SniffTest
         return '../../src/Brera/Sniffs/Complexity/TooManyTypedArgumentsSniff.php';
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnyWarningsIfNumberOfTypedArgumentsDoesNotExceedAllowed()
+    public function testNoWarningsAddedIfNumberOfTypedArgumentsDoesNotExceedAllowed()
     {
         $code = 'public function processData(Foo $foo, Bar $bar, array $anArray, Baz $baz, $godKnowsWhatTypeIsIt) { }';
 
@@ -23,10 +20,7 @@ class TooManyTypedArgumentsSniffTest extends SniffTest
         $this->assertEmpty($errors);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldAddAWarningIfNumberOfTypedArgumentsExceedsAllowed()
+    public function testWarningIsAddedIfNumberOfTypedArgumentsExceedsAllowed()
     {
         $code = 'public function processData(Foo $foo, Bar $bar, array $anArray, Baz $baz, Qux $qux) { }';
 
