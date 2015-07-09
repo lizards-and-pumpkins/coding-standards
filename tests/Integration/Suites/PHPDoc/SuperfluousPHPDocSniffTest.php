@@ -104,4 +104,34 @@ class SuperfluousPHPDocSniffTest extends SniffTest
 
         $this->assertEquals($expectedError, $error);
     }
+
+    /**
+     * @dataProvider getTestRelatedAnnotations
+     * @param string $annotation
+     */
+    public function testNoErrorsAddedIfPHPDocContainsAtLeastOneTestRelatedAnnotation($annotation)
+    {
+        $code = '
+        /**
+         * ' . $annotation . '
+         */
+        public function foo() { }';
+
+        $phpCSFile = $this->processCode($code);
+        $errors = $phpCSFile->getErrors();
+
+        $this->assertEmpty($errors);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function getTestRelatedAnnotations()
+    {
+        return [
+            ['@depends'],
+            ['@dataProvider'],
+            ['@runInSeparateProcess']
+        ];
+    }
 }
