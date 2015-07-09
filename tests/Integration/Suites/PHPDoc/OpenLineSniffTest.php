@@ -10,10 +10,7 @@ class OpenLineSniffTest extends SniffTest
         return '../../src/Brera/Sniffs/PHPDoc/OpenLineSniff.php';
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnyErrorsIfAnnotationOpeningTagIsTheOnlyContentOnTheLine()
+    public function testNoErrorsAddedIfAnnotationOpeningTagIsTheOnlyContentOnTheLine()
     {
         $code = '
         /**
@@ -27,10 +24,7 @@ class OpenLineSniffTest extends SniffTest
         $this->assertEmpty($errors);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldAddAnErrorIfAnnotationOpeningTagIfFollowedBySomeContentOnTheSameLine()
+    public function testErrorIsAddedIfAnnotationOpeningTagIfFollowedBySomeContentOnTheSameLine()
     {
         $code = '
         /** bar

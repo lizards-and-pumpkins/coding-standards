@@ -25,10 +25,6 @@ class Brera_Sniffs_PHPDoc_AnnotationGroupingSniff implements PHP_CodeSniffer_Sni
             return;
         }
 
-        if ($this->isTest($functionTokenIndex)) {
-            return;
-        }
-
         $groups = $this->getGroupedPHPDocAnnotations($functionTokenIndex);
 
         if ($this->groupsAreMixed($groups)) {

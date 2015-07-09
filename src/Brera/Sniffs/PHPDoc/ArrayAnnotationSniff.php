@@ -25,10 +25,6 @@ class Brera_Sniffs_PHPDoc_ArrayAnnotationSniff implements PHP_CodeSniffer_Sniff
             return;
         }
 
-        if ($this->isTest($functionTokenIndex)) {
-            return;
-        }
-
         $functionPHPDocAnnotationsIndices = $this->getPHPDocAnnotationsIndices($functionTokenIndex);
 
         foreach ($functionPHPDocAnnotationsIndices as $annotationIndex) {

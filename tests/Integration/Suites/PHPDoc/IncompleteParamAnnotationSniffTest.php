@@ -10,10 +10,7 @@ class IncompleteParamAnnotationSniffTest extends SniffTest
         return '../../src/Brera/Sniffs/PHPDoc/IncompleteParamAnnotationSniff.php';
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnyErrorsIfParamAnnotationIsComplete()
+    public function testNoErrorsAddedIfParamAnnotationIsComplete()
     {
         $code = '
         /**
@@ -28,11 +25,10 @@ class IncompleteParamAnnotationSniffTest extends SniffTest
     }
 
     /**
-     * @test
-     * @param string $incompleteParamAnnotation
      * @dataProvider incompleteParamAnnotationProvider
+     * @param string $incompleteParamAnnotation
      */
-    public function itShouldAddAnErrorIfVariableNameIsMissing($incompleteParamAnnotation)
+    public function testErrorIsAddedIfVariableNameIsMissing($incompleteParamAnnotation)
     {
         $phpCSFile = $this->processCode($incompleteParamAnnotation);
         $error = $this->getFirstErrorMessage($phpCSFile->getErrors());

@@ -10,10 +10,7 @@ class GetMockSniffTest extends SniffTest
         return '../../src/Brera/Sniffs/Tests/GetMockSniff.php';
     }
 
-    /**
-     * @test
-     */
-    public function itShouldAddAnErrorIfGetMockIsUsedNotOnlyToDisableOriginalConstructor()
+    public function testErrorIsAddedIfGetMockIsUsedNotOnlyToDisableOriginalConstructor()
     {
         $code = '$mock = $this->getMock(Foo::class, ["getFoo"]);';
 
@@ -25,10 +22,7 @@ class GetMockSniffTest extends SniffTest
         $this->assertEquals($expectedError, $error);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnyErrorsIfGetMockIsUsedWithNoOptionalArguments()
+    public function testNoErrorsAddedIfGetMockIsUsedWithNoOptionalArguments()
     {
         $code = '$mock = $this->getMock(Foo::class);';
 
@@ -38,10 +32,7 @@ class GetMockSniffTest extends SniffTest
         $this->assertEmpty($errors);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnyErrorsIfGetMockIsUsedOnlyToDisableOriginalConstructor()
+    public function testNoErrorsAddedIfGetMockIsUsedOnlyToDisableOriginalConstructor()
     {
         $code = '$mock = $this->getMock(Foo::class, [], [], "", false);';
 

@@ -10,10 +10,7 @@ class UselessAnnotationSniffTest extends SniffTest
         return '../../src/Brera/Sniffs/PHPDoc/UselessAnnotationSniff.php';
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnyErrorsIfOnlyAllowedAnnotationsAreDefined()
+    public function testNoErrorsAddedIfOnlyAllowedAnnotationsAreDefined()
     {
         $code = '
         /**
@@ -31,10 +28,7 @@ class UselessAnnotationSniffTest extends SniffTest
         $this->assertEmpty($errors);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldAddAnErrorIfAnnotationContainsUselessLines()
+    public function testErrorIsAddedIfAnnotationContainsUselessLines()
     {
         $code = '
         /**

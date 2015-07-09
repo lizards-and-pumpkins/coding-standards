@@ -10,10 +10,7 @@ class ArrayAnnotationSniffTest extends SniffTest
         return '../../src/Brera/Sniffs/PHPDoc/ArrayAnnotationSniff.php';
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnyErrorsIfArraysAreExplicitlyAnnotated()
+    public function testNoErrorsAddedIfArraysAreExplicitlyAnnotated()
     {
         $code = '
         /**
@@ -27,10 +24,7 @@ class ArrayAnnotationSniffTest extends SniffTest
         $this->assertEmpty($errors);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldAddAnErrorIfArrayParameterIsAnnotatedImplicitly()
+    public function testErrorIsAddedIfArrayParameterIsAnnotatedImplicitly()
     {
         $code = '
         /**
@@ -45,10 +39,7 @@ class ArrayAnnotationSniffTest extends SniffTest
         $this->assertEquals($expectedError, $error);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldAddAnErrorIfArrayReturnIsAnnotatedImplicitly()
+    public function testErrorIsAddedIfArrayReturnIsAnnotatedImplicitly()
     {
         $code = '
         /**

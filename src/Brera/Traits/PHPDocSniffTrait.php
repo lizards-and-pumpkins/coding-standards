@@ -16,26 +16,6 @@ trait Brera_Traits_PHPDocSniffTrait
      * @param int $functionTokenIndex
      * @return bool
      */
-    final protected function isTest($functionTokenIndex)
-    {
-        if (!$this->phpDocExists($functionTokenIndex)) {
-            return false;
-        }
-
-        $isTestAnnotationFound = false;
-        $functionPHPDocAnnotationsIndices = $this->getPHPDocAnnotationsIndices($functionTokenIndex);
-
-        while (!$isTestAnnotationFound && list(,$annotationIndex) = each($functionPHPDocAnnotationsIndices)) {
-            $isTestAnnotationFound = '@test' === $this->tokens[$annotationIndex]['content'];
-        }
-
-        return $isTestAnnotationFound;
-    }
-
-    /**
-     * @param int $functionTokenIndex
-     * @return bool
-     */
     final protected function phpDocIsRequired($functionTokenIndex)
     {
         return $this->functionReturnsNonVoid($functionTokenIndex) ||

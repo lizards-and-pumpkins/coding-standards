@@ -10,10 +10,7 @@ class MissingPHPDocSniffTest extends SniffTest
         return '../../src/Brera/Sniffs/PHPDoc/MissingPHPDocSniff.php';
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnyErrorsIfFunctionHasAValidPHPDoc()
+    public function testNoErrorsAddedIfFunctionHasAValidPHPDoc()
     {
         $code = '
         /**
@@ -27,10 +24,7 @@ class MissingPHPDocSniffTest extends SniffTest
         $this->assertEmpty($errors);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldAddAnErrorIfFunctionPHPDocBlockIsRequiredButMissing()
+    public function testErrorIsAddedIfFunctionPHPDocBlockIsRequiredButMissing()
     {
         $code = 'public function prepareFoo($foo) { }';
 
@@ -41,10 +35,7 @@ class MissingPHPDocSniffTest extends SniffTest
         $this->assertEquals($expectedError, $error);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldAddAnErrorIfPHPDocHasAtLeastOneUntypedArgument()
+    public function testErrorIsAddedIfPHPDocHasAtLeastOneUntypedArgument()
     {
         $code = 'public function prepareData(array $data) { }';
 
@@ -55,10 +46,7 @@ class MissingPHPDocSniffTest extends SniffTest
         $this->assertEquals($expectedError, $error);
     }
 
-    /**
-     * @test
-     */
-    public function itShouldNotAddAnyErrorsIfPHPDocContainsFromOnlyTypedArguments()
+    public function testNoErrorsAddedIfPHPDocContainsFromOnlyTypedArguments()
     {
         $code = 'public function prepareFoo(Foo $foo) { }';
 

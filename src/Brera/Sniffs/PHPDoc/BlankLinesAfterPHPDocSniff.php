@@ -25,10 +25,6 @@ class Brera_Sniffs_PHPDoc_BlankLinesAfterPHPDocSniff implements PHP_CodeSniffer_
             return;
         }
 
-        if ($this->isTest($functionTokenIndex)) {
-            return;
-        }
-
         if (!$this->phpDocIsRequired($functionTokenIndex) && !$this->phpDocExists($functionTokenIndex)) {
             return;
         }
