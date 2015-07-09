@@ -30,7 +30,15 @@ class Brera_Sniffs_PHPDoc_UselessAnnotationSniff implements PHP_CodeSniffer_Snif
 
         $currentLineNumber = $this->tokens[$currentIndex]['line'];
         $searchTypes = [T_DOC_COMMENT_WHITESPACE, T_DOC_COMMENT_STAR];
-        $allowedAnnotations = ['@see', '@param', '@return', '@throws', '@depends', '@dataProvider'];
+        $allowedAnnotations = [
+            '@see',
+            '@param',
+            '@return',
+            '@throws',
+            '@depends',
+            '@dataProvider',
+            '@runInSeparateProcess'
+        ];
 
         while ($currentIndex = $this->file->findNext($searchTypes, $currentIndex + 1, $commentEndIndex - 1, true)) {
             if ($currentLineNumber !== $this->tokens[$currentIndex]['line']) {
