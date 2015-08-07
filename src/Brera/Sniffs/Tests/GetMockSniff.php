@@ -35,11 +35,11 @@ class Brera_Sniffs_Tests_GetMockSniff implements PHP_CodeSniffer_Sniff
         if (empty($arguments)) {
             return;
         }
-
-        if (!$this->isTokenAnEmptyArray($arguments[0]) ||
-            !$this->isTokenAnEmptyArray($arguments[1]) ||
-            !$this->isTokenAnEmptyString($arguments[2]) ||
-            T_FALSE !== $arguments[3]['code']
+        
+        if ((isset($arguments[0]) && !$this->isTokenAnEmptyArray($arguments[0])) ||
+            (isset($arguments[1]) && !$this->isTokenAnEmptyArray($arguments[1])) ||
+            (isset($arguments[2]) && !$this->isTokenAnEmptyString($arguments[2])) ||
+            (isset($arguments[3]) && T_FALSE !== $arguments[3]['code'])
         ) {
             $file->addError(
                 'Optional arguments of getMock() can be only used to disable original constructor',
