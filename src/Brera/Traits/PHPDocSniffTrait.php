@@ -19,8 +19,7 @@ trait Brera_Traits_PHPDocSniffTrait
     final protected function phpDocIsRequired($functionTokenIndex)
     {
         return $this->functionReturnsNonVoid($functionTokenIndex) ||
-               $this->functionHasUntypedParameters($functionTokenIndex) ||
-               $this->functionThrowsAnException($functionTokenIndex);
+               $this->functionHasUntypedParameters($functionTokenIndex);
     }
 
     /**
@@ -108,22 +107,6 @@ trait Brera_Traits_PHPDocSniffTrait
         }
 
         return $hasUntypedParameter;
-    }
-
-    /**
-     * @param $functionTokenIndex
-     * @return bool
-     */
-    private function functionThrowsAnException($functionTokenIndex)
-    {
-        if ($this->isInterfaceOrAbstractFunction($functionTokenIndex)) {
-            return true;
-        }
-
-        $scopeOpenerIndex = $this->tokens[$functionTokenIndex]['scope_opener'];
-        $scopeCloserIndex = $this->tokens[$functionTokenIndex]['scope_closer'];
-
-        return false !== $this->file->findNext(T_THROW, $scopeOpenerIndex + 1, $scopeCloserIndex - 1);
     }
 
     /**
