@@ -34,7 +34,6 @@ class Brera_Sniffs_PHPDoc_UselessAnnotationSniff implements PHP_CodeSniffer_Snif
             '@see',
             '@param',
             '@return',
-            '@throws',
             '@depends',
             '@dataProvider',
             '@runInSeparateProcess'

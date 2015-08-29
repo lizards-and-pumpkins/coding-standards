@@ -61,11 +61,15 @@ class SuperfluousPHPDocSniffTest extends SniffTest
         $this->assertEmpty($errors);
     }
 
-    public function testErrorIsAddedIfFunctionDoesNotRequireAnAnnotationButOneIsSpecified()
+    /**
+     * @dataProvider getSuperfluousAnnotations
+     * @param string $superfluousAnnotation
+     */
+    public function testErrorIsAddedIfFunctionDoesNotRequireAnAnnotationButOneIsSpecified($superfluousAnnotation)
     {
         $code = '
         /**
-         * @return void
+         * ' . $superfluousAnnotation . '
          */
         public function prepareFoo() { }';
 
@@ -74,6 +78,17 @@ class SuperfluousPHPDocSniffTest extends SniffTest
         $expectedError = 'Superfluous PHPDoc';
 
         $this->assertEquals($expectedError, $error);
+    }
+
+    /**
+     * @return array[]
+     */
+    public function getSuperfluousAnnotations()
+    {
+        return [
+            ['@return void'],
+            ['@throws \Exception']
+        ];
     }
 
     public function testNoErrorsAddedIfPHPDocHasAtLeastOneUntypedArgument()

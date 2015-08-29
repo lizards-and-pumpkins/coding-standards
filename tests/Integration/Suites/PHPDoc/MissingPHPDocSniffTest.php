@@ -55,4 +55,13 @@ class MissingPHPDocSniffTest extends SniffTest
 
         $this->assertEmpty($errors);
     }
+
+    public function testNoErrorsAreAddedIfThrowsAnnotationIsMissingInPHPDoc()
+    {
+        $code = 'public function foo() { throw new \Exception; }';
+        $phpCSFile = $this->processCode($code);
+        $errors = $phpCSFile->getErrors();
+
+        $this->assertEmpty($errors);
+    }
 }

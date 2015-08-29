@@ -10,7 +10,7 @@ class UselessAnnotationSniffTest extends SniffTest
         return '../../src/Brera/Sniffs/PHPDoc/UselessAnnotationSniff.php';
     }
 
-    public function testNoErrorsAddedIfOnlyAllowedAnnotationsAreDefined()
+    public function testNoErrorsAddedIfOnlyAllowedAnnotationsArePresentInPHPDoc()
     {
         $code = '
         /**
@@ -19,8 +19,7 @@ class UselessAnnotationSniffTest extends SniffTest
         public function getFoo()
         {
             return "foo";
-        }
-';
+        }';
 
         $phpCSFile = $this->processCode($code);
         $errors = $phpCSFile->getErrors();
@@ -39,8 +38,7 @@ class UselessAnnotationSniffTest extends SniffTest
         public function getFoo()
         {
             return "foo";
-        }
-';
+        }';
 
         $phpCSFile = $this->processCode($code);
         $error = $this->getFirstErrorMessage($phpCSFile->getErrors());
