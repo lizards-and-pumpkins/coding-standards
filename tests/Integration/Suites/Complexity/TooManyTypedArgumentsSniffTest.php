@@ -7,7 +7,7 @@ class TooManyTypedArgumentsSniffTest extends SniffTest
      */
     protected function getFileUnderTest()
     {
-        return '../../src/Brera/Sniffs/Complexity/TooManyTypedArgumentsSniff.php';
+        return '../../src/LizardsAndPumpkins/Sniffs/Complexity/TooManyTypedArgumentsSniff.php';
     }
 
     public function testNoWarningsAddedIfNumberOfTypedArgumentsDoesNotExceedAllowed()

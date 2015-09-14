@@ -1,6 +1,6 @@
 <?php
 
-class Brera_Sniffs_PHPDoc_IncompleteParamAnnotationSniff implements PHP_CodeSniffer_Sniff
+class LizardsAndPumpkins_Sniffs_PHPDoc_IncompleteParamAnnotationSniff implements PHP_CodeSniffer_Sniff
 {
     /**
      * @return int[]

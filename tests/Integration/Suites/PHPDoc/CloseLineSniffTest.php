@@ -7,7 +7,7 @@ class CloseLineSniffTest extends SniffTest
      */
     protected final function getFileUnderTest()
     {
-        return '../../src/Brera/Sniffs/PHPDoc/CloseLineSniff.php';
+        return '../../src/LizardsAndPumpkins/Sniffs/PHPDoc/CloseLineSniff.php';
     }
 
     public function testNoErrorsAddedIfAnnotationClosingTagHasNothingInFrontOfIt()

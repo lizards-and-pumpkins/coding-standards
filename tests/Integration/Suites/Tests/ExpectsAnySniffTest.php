@@ -8,7 +8,7 @@ class ExpectsAnySniffTest extends SniffTest
      */
     protected function getFileUnderTest()
     {
-        return '../../src/Brera/Sniffs/Tests/ExpectsAnySniff.php';
+        return '../../src/LizardsAndPumpkins/Sniffs/Tests/ExpectsAnySniff.php';
     }
 
     /**

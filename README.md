@@ -1,3 +1,3 @@
-# Brera checks for PHP_CodeSniffer
+# Lizards & Pumpkins checks for PHP_CodeSniffer
 
-Please refer to [PHP_CodeSniffer section of Brera coding standards](https://github.com/brera/brera/wiki/Coding-Standards#php_codesniffer) page for installation and usage instructions.
+Please refer to [PHP_CodeSniffer section of Lizards & Pumpkins coding standards](https://github.com/lizards-and-pumpkins/catalog/wiki/Coding-Standards#php_codesniffer) page for installation and usage instructions.

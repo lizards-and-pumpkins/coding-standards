@@ -7,7 +7,7 @@ class SuperfluousPHPDocSniffTest extends SniffTest
      */
     protected final function getFileUnderTest()
     {
-        return '../../src/Brera/Sniffs/PHPDoc/SuperfluousPHPDocSniff.php';
+        return '../../src/LizardsAndPumpkins/Sniffs/PHPDoc/SuperfluousPHPDocSniff.php';
     }
 
     public function testNoErrorsAddedIfAnnotationsAreRequiredAndSpecified()

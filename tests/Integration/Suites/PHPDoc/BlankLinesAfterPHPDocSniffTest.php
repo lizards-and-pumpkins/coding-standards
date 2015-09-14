@@ -7,7 +7,7 @@ class BlankLinesAfterPHPDocSniffTest extends SniffTest
      */
     protected function getFileUnderTest()
     {
-        return '../../src/Brera/Sniffs/PHPDoc/BlankLinesAfterPHPDocSniff.php';
+        return '../../src/LizardsAndPumpkins/Sniffs/PHPDoc/BlankLinesAfterPHPDocSniff.php';
     }
 
     public function testNoErrorsAddedIfFunctionAndItsAnnotationHaveNoBlankLinesInBetween()

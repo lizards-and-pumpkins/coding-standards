@@ -7,7 +7,7 @@ class ArrayAnnotationSniffTest extends SniffTest
      */
     protected final function getFileUnderTest()
     {
-        return '../../src/Brera/Sniffs/PHPDoc/ArrayAnnotationSniff.php';
+        return '../../src/LizardsAndPumpkins/Sniffs/PHPDoc/ArrayAnnotationSniff.php';
     }
 
     public function testNoErrorsAddedIfArraysAreExplicitlyAnnotated()

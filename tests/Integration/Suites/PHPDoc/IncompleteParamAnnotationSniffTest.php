@@ -7,7 +7,7 @@ class IncompleteParamAnnotationSniffTest extends SniffTest
      */
     protected function getFileUnderTest()
     {
-        return '../../src/Brera/Sniffs/PHPDoc/IncompleteParamAnnotationSniff.php';
+        return '../../src/LizardsAndPumpkins/Sniffs/PHPDoc/IncompleteParamAnnotationSniff.php';
     }
 
     public function testNoErrorsAddedIfParamAnnotationIsComplete()

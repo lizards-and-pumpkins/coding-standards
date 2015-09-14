@@ -7,7 +7,7 @@ class GetMockSniffTest extends SniffTest
      */
     protected final function getFileUnderTest()
     {
-        return '../../src/Brera/Sniffs/Tests/GetMockSniff.php';
+        return '../../src/LizardsAndPumpkins/Sniffs/Tests/GetMockSniff.php';
     }
 
     public function testErrorIsAddedIfGetMockIsUsedNotOnlyToDisableOriginalConstructor()

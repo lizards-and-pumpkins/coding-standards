@@ -1,8 +1,8 @@
 <?php
 
-class Brera_Sniffs_PHPDoc_BlankLinesAfterPHPDocSniff implements PHP_CodeSniffer_Sniff
+class LizardsAndPumpkins_Sniffs_PHPDoc_BlankLinesAfterPHPDocSniff implements PHP_CodeSniffer_Sniff
 {
-    use Brera_Traits_PHPDocSniffTrait;
+    use LizardsAndPumpkins_Traits_PHPDocSniffTrait;
 
     /**
      * @return int[]

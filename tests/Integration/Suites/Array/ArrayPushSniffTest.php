@@ -7,7 +7,7 @@ class ArrayPushSniffTest extends SniffTest
      */
     protected function getFileUnderTest()
     {
-        return '../../src/Brera/Sniffs/Array/ArrayPushSniff.php';
+        return '../../src/LizardsAndPumpkins/Sniffs/Array/ArrayPushSniff.php';
     }
 
     public function testNoErrorsAddedIfArrayPushIsNotFound()

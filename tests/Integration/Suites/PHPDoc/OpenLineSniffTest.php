@@ -7,7 +7,7 @@ class OpenLineSniffTest extends SniffTest
      */
     protected final function getFileUnderTest()
     {
-        return '../../src/Brera/Sniffs/PHPDoc/OpenLineSniff.php';
+        return '../../src/LizardsAndPumpkins/Sniffs/PHPDoc/OpenLineSniff.php';
     }
 
     public function testNoErrorsAddedIfAnnotationOpeningTagIsTheOnlyContentOnTheLine()

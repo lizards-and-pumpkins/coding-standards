@@ -7,7 +7,7 @@ class MissingPHPDocSniffTest extends SniffTest
      */
     protected final function getFileUnderTest()
     {
-        return '../../src/Brera/Sniffs/PHPDoc/MissingPHPDocSniff.php';
+        return '../../src/LizardsAndPumpkins/Sniffs/PHPDoc/MissingPHPDocSniff.php';
     }
 
     public function testNoErrorsAddedIfFunctionHasAValidPHPDoc()

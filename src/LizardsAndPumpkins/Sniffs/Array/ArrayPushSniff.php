@@ -1,6 +1,6 @@
 <?php
 
-class Brera_Sniffs_Array_ArrayPushSniff implements PHP_CodeSniffer_Sniff
+class LizardsAndPumpkins_Sniffs_Array_ArrayPushSniff implements PHP_CodeSniffer_Sniff
 {
 
     /**

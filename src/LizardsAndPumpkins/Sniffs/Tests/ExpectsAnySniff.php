@@ -1,7 +1,7 @@
 <?php
 
 
-class Brera_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer_Sniff
+class LizardsAndPumpkins_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer_Sniff
 {
     /**
      * @var mixed[]

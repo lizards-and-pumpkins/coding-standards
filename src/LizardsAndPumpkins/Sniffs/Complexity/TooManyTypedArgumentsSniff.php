@@ -1,6 +1,6 @@
 <?php
 
-class Brera_Sniffs_Complexity_TooManyTypedArgumentsSniff implements PHP_CodeSniffer_Sniff
+class LizardsAndPumpkins_Sniffs_Complexity_TooManyTypedArgumentsSniff implements PHP_CodeSniffer_Sniff
 {
     const MAXIMUM_ALLOWED_TYPED_ARGUMENTS = 3;
 

@@ -1,6 +1,6 @@
 <?php
 
-trait Brera_Traits_PHPDocSniffTrait
+trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
 {
     /**
      * @var PHP_CodeSniffer_File
