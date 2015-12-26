@@ -36,7 +36,10 @@ class LizardsAndPumpkins_Sniffs_PHPDoc_UselessAnnotationSniff implements PHP_Cod
             '@return',
             '@depends',
             '@dataProvider',
-            '@runInSeparateProcess'
+            '@runInSeparateProcess',
+            '{@inheritdoc}',
+            '@before',
+            '@after',
         ];
 
         while ($currentIndex = $this->file->findNext($searchTypes, $currentIndex + 1, $commentEndIndex - 1, true)) {
