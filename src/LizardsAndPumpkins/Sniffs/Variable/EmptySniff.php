@@ -16,6 +16,6 @@ class LizardsAndPumpkins_Sniffs_Variable_EmptySniff implements PHP_CodeSniffer_S
      */
     public function process(PHP_CodeSniffer_File $file, $tokenIndex)
     {
-        $file->addError('empty() is disallowed.', $tokenIndex);
+        $file->addError('empty() is disallowed, please use explicit comparison instead.', $tokenIndex);
     }
 }

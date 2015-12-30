@@ -21,8 +21,10 @@ class EmptySniffTest extends SniffTest
     public function testErrorIsAddedIfCodeContainsEmptyFunction()
     {
         $code = 'if (empty(0)) { }';
-        $phpCSFile = $this->processCode($code);
 
-        $this->assertSame('empty() is disallowed.', $this->getFirstErrorMessage($phpCSFile->getErrors()));
+        $phpCSFile = $this->processCode($code);
+        $firstErrorMessage = $this->getFirstErrorMessage($phpCSFile->getErrors());
+
+        $this->assertSame('empty() is disallowed, please use explicit comparison instead.', $firstErrorMessage);
     }
 }
