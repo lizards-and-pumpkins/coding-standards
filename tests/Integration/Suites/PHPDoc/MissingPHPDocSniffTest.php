@@ -64,4 +64,15 @@ class MissingPHPDocSniffTest extends SniffTest
 
         $this->assertEmpty($errors);
     }
+
+    public function testNoErrorsAreAddedIfReturnStateIsInsideOfClosure()
+    {
+        $code = 'public function foo()
+                 {
+                     $bar = function() { return null; };
+                 }';
+        $phpCSFile = $this->processCode($code);
+
+        $this->assertSame(0, $phpCSFile->getErrorCount());
+    }
 }
