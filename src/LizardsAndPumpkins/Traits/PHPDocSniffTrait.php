@@ -79,8 +79,9 @@ trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
 
         while (!$nonVoidReturnFound && ($returnIndex = $this->getNextReturnIndex($currentIndex, $scopeCloserIndex))) {
             $currentIndex = $returnIndex;
+            $nextNonEmptyTokenIndex = $this->getNextNonEmptyTokenIndex($returnIndex + 1);
 
-            if ($nextNonEmptyTokenIndex = $this->getNextNonEmptyTokenIndex($returnIndex + 1)) {
+            if ($nextNonEmptyTokenIndex > 0 && !$this->isInsideOfClosure($nextNonEmptyTokenIndex)) {
                 $nonVoidReturnFound = T_SEMICOLON !== $this->tokens[$nextNonEmptyTokenIndex]['code'];
             }
         }
@@ -138,6 +139,15 @@ trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
         $searchTypes = array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, [T_WHITESPACE]);
 
         return (int) $this->file->findNext($searchTypes, $startTokenIndex, null, true);
+    }
+
+    /**
+     * @param int $tokenIndex
+     * @return bool
+     */
+    private function isInsideOfClosure($tokenIndex)
+    {
+        return in_array(T_CLOSURE, $this->tokens[$tokenIndex]['conditions']);
     }
 
     /**
