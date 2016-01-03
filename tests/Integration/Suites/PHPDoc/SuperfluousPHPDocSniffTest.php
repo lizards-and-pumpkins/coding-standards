@@ -146,7 +146,10 @@ class SuperfluousPHPDocSniffTest extends SniffTest
         return [
             ['@depends'],
             ['@dataProvider'],
-            ['@runInSeparateProcess']
+            ['@runInSeparateProcess'],
+            ['@before'],
+            ['@after'],
+            ['@requires'],
         ];
     }
 }

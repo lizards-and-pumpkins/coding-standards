@@ -39,7 +39,7 @@ class LizardsAndPumpkins_Sniffs_PHPDoc_SuperfluousPHPDocSniff implements PHP_Cod
 
         foreach ($annotationTokenIndices as $annotationIndex) {
             $annotationToken = $this->tokens[$annotationIndex];
-            if (in_array($annotationToken['content'], ['@depends', '@dataProvider', '@runInSeparateProcess'])) {
+            if (in_array($annotationToken['content'], $this->getAnnotationsAllowedInTests())) {
                 return true;
             }
         }
