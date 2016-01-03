@@ -16,7 +16,7 @@ trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
      * @param int $functionTokenIndex
      * @return bool
      */
-    final protected function phpDocIsRequired($functionTokenIndex)
+    private function phpDocIsRequired($functionTokenIndex)
     {
         return $this->functionReturnsNonVoid($functionTokenIndex) ||
                $this->functionHasUntypedParameters($functionTokenIndex);
@@ -26,7 +26,7 @@ trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
      * @param $functionTokenIndex
      * @return bool
      */
-    final protected function phpDocExists($functionTokenIndex)
+    private function phpDocExists($functionTokenIndex)
     {
         $commentEndIndex = $this->getPhpDocEndTokenIndex($functionTokenIndex);
 
@@ -37,7 +37,7 @@ trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
      * @param int $functionTokenIndex
      * @return bool|int
      */
-    final protected function getPhpDocEndTokenIndex($functionTokenIndex)
+    private function getPhpDocEndTokenIndex($functionTokenIndex)
     {
         $searchTypes = array_merge(PHP_CodeSniffer_Tokens::$methodPrefixes, [T_WHITESPACE]);
 
@@ -48,7 +48,7 @@ trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
      * @param int $functionTokenIndex
      * @return int[]
      */
-    final protected function getPHPDocAnnotationsIndices($functionTokenIndex)
+    private function getPHPDocAnnotationsIndices($functionTokenIndex)
     {
         $commentEndIndex = $this->getPhpDocEndTokenIndex($functionTokenIndex);
         $commentStartIndex = $this->tokens[$commentEndIndex]['comment_opener'];
@@ -138,5 +138,35 @@ trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
         $searchTypes = array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, [T_WHITESPACE]);
 
         return (int) $this->file->findNext($searchTypes, $startTokenIndex, null, true);
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getAllowedAnnotations()
+    {
+        $annotationsAllowedInCode = [
+            '@see',
+            '@param',
+            '@return',
+        ];
+
+        return array_merge($annotationsAllowedInCode, $this->getAnnotationsAllowedInTests());
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getAnnotationsAllowedInTests()
+    {
+        return [
+            '@depends',
+            '@dataProvider',
+            '@runInSeparateProcess',
+            '{@inheritdoc}',
+            '@before',
+            '@after',
+            '@requires',
+        ];
     }
 }
