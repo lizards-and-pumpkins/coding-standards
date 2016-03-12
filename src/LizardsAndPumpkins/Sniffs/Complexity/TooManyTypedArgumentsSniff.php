@@ -14,26 +14,19 @@ class LizardsAndPumpkins_Sniffs_Complexity_TooManyTypedArgumentsSniff implements
 
     /**
      * @param PHP_CodeSniffer_File $file
-     * @param int $functionTokenIndex
+     * @param int $tokenIndex
      */
-    public function process(PHP_CodeSniffer_File $file, $functionTokenIndex)
+    public function process(PHP_CodeSniffer_File $file, $tokenIndex)
     {
-        $parameters = $file->getMethodParameters($functionTokenIndex);
-
-        if (empty($parameters)) {
-            return;
-        }
-
-        $typedArgumentsCount = 0;
-
-        while ($typedArgumentsCount <= self::MAXIMUM_ALLOWED_TYPED_ARGUMENTS && list(, $parameter)= each($parameters)) {
-            if (!empty($parameter['type_hint']) && 'array' !== $parameter['type_hint']) {
-                ++$typedArgumentsCount;
+        $typedArgumentsCount = array_reduce($file->getMethodParameters($tokenIndex), function ($carry, $parameter) {
+            if ('' !== $parameter['type_hint'] && 'array' !== $parameter['type_hint']) {
+                return $carry + 1;
             }
-        }
+            return $carry;
+        }, 0);
 
         if ($typedArgumentsCount > self::MAXIMUM_ALLOWED_TYPED_ARGUMENTS) {
-            $file->addWarning('Too many objects passed to function', $functionTokenIndex);
+            $file->addWarning('Too many objects passed to function', $tokenIndex);
         }
     }
 }
