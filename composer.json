@@ -1,6 +1,6 @@
 {
     "name": "lizards-and-pumpkins/coding-standards",
-    "description": "Lizards & Pumpkins specific checks for PHP_CodeSniffer",
+    "description": "Lizards & Pumpkins Coding Standards for PHP_CodeSniffer",
     "license": "BSD-3-Clause",
     "authors": [
         {
