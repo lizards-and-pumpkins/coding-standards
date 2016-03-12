@@ -7,7 +7,7 @@ class UselessAnnotationSniffTest extends SniffTest
      */
     protected final function getFileUnderTest()
     {
-        return '../../src/LizardsAndPumpkins/Sniffs/PHPDoc/UselessAnnotationSniff.php';
+        return 'src/LizardsAndPumpkins/Sniffs/PHPDoc/UselessAnnotationSniff.php';
     }
 
     public function testNoErrorsAddedIfOnlyAllowedAnnotationsArePresentInPHPDoc()

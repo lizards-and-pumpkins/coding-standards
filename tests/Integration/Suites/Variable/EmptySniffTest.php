@@ -7,7 +7,7 @@ class EmptySniffTest extends SniffTest
      */
     protected function getFileUnderTest()
     {
-        return '../../src/LizardsAndPumpkins/Sniffs/Variable/EmptySniff.php';
+        return 'src/LizardsAndPumpkins/Sniffs/Variable/EmptySniff.php';
     }
 
     public function testNoErrorsAreAddedIfEmptyFunctionIsNotFound()
