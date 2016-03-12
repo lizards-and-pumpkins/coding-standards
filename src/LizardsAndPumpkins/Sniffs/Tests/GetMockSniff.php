@@ -82,14 +82,14 @@ class LizardsAndPumpkins_Sniffs_Tests_GetMockSniff implements PHP_CodeSniffer_Sn
      */
     private function getMethodArgumentsStartingFromSecond(PHP_CodeSniffer_File $file, $tokenIndex, array $tokens)
     {
-        $openBracketIndex = $file->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $tokenIndex + 1, null, true);
+        $openBracketIndex = (int) $file->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $tokenIndex + 1, null, true);
         $closeBracketIndex = $tokens[$openBracketIndex]['parenthesis_closer'];
         $end = $file->findEndOfStatement($openBracketIndex + 1);
 
         $arguments = [];
 
-        while ($tokens[$end]['code'] === T_COMMA) {
-            $next = $file->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $end + 1, $closeBracketIndex, true);
+        while (T_COMMA === $tokens[$end]['code']) {
+            $next = (int) $file->findNext(PHP_CodeSniffer_Tokens::$emptyTokens, $end + 1, $closeBracketIndex, true);
             $arguments[] = $tokens[$next];
             $end = $file->findEndOfStatement($next);
         }
