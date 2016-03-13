@@ -36,7 +36,7 @@ class LizardsAndPumpkins_Sniffs_Tests_GetMockSniff implements PHP_CodeSniffer_Sn
             return;
         }
         
-        if ($this->argumentsAreUserForSomethingElseButDisablingConstructorInvocation($arguments)) {
+        if ($this->argumentsAreUsedForSomethingElseButDisablingConstructorInvocation($arguments)) {
             $file->addError(
                 'Optional arguments of getMock() can be only used to disable original constructor',
                 $tokenIndex
@@ -131,7 +131,7 @@ class LizardsAndPumpkins_Sniffs_Tests_GetMockSniff implements PHP_CodeSniffer_Sn
      * @param $arguments
      * @return bool
      */
-    private function argumentsAreUserForSomethingElseButDisablingConstructorInvocation($arguments)
+    private function argumentsAreUsedForSomethingElseButDisablingConstructorInvocation($arguments)
     {
         return (isset($arguments[0]) && !$this->isTokenAnEmptyArray($arguments[0])) ||
                (isset($arguments[1]) && !$this->isTokenAnEmptyArray($arguments[1])) ||
