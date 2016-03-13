@@ -34,6 +34,10 @@ class LizardsAndPumpkins_Sniffs_PHPDoc_OpenLineSniff implements PHP_CodeSniffer_
         }
     }
 
+    /**
+     * @param int $functionTokenIndex
+     * @return bool
+     */
     private function isThereAnyContentAfterOpenPHPDocToken($functionTokenIndex)
     {
         $commentEndIndex = $this->getPhpDocEndTokenIndex($functionTokenIndex);

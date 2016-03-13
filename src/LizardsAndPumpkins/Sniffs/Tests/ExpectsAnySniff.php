@@ -93,7 +93,7 @@ class LizardsAndPumpkins_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer
 
     /**
      * @param array[] $assertAfter
-     * @return bool
+     * @return int|bool
      */
     private function getEndIndexIfMatches(array $assertAfter)
     {
@@ -186,8 +186,8 @@ class LizardsAndPumpkins_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer
 
     private function removeExpectsAnyTokens(PHP_CodeSniffer_File $file)
     {
-        $matchStartIndex = $this->getStartIndexIfMatches($this->assertFramesBefore);
-        $matchEndIndex = $this->getEndIndexIfMatches($this->assertFramesAfter);
+        $matchStartIndex = (int) $this->getStartIndexIfMatches($this->assertFramesBefore);
+        $matchEndIndex = (int) $this->getEndIndexIfMatches($this->assertFramesAfter);
         for ($i = $matchStartIndex; $i <= $matchEndIndex; $i++) {
             $file->fixer->replaceToken($i, '');
         }
