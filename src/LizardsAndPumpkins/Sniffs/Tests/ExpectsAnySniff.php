@@ -1,17 +1,16 @@
 <?php
 
-
 class LizardsAndPumpkins_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer_Sniff
 {
     /**
-     * @var mixed[]
+     * @var array[]
      */
     private $assertFramesBefore = [
         ['content' => '->'],
     ];
 
     /**
-     * @var mixed[]
+     * @var array[]
      */
     private $assertFramesAfter = [
         ['content' => '('],
@@ -58,10 +57,11 @@ class LizardsAndPumpkins_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer
         if (!$this->isMatchesExpectsAnyMethodCall()) {
             return;
         }
-        $canFix = $this->addWarningMessage($file);
 
-        if (true === $canFix) {
-            $this->removeExpectsAnyTokensIfEnabled($file);
+        $canFix = $file->addFixableWarning($this->message, $tokenStackIndex);
+
+        if (true === $canFix && true === $file->fixer->enabled) {
+            $this->removeExpectsAnyTokens($file);
         }
     }
 
@@ -73,32 +73,30 @@ class LizardsAndPumpkins_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer
         if ('expects' !== $this->tokenStack[$this->tokenIndex]['content']) {
             return false;
         }
-        $matchStartIndex = $this->getStartIndexIfMatches($this->assertFramesBefore);
-        $matchEndIndex = $this->getEndIndexIfMatches($this->assertFramesAfter);
-        if (false === $matchStartIndex || false === $matchEndIndex) {
+
+        if (false === $this->getStartIndexIfMatches() || false === $this->getEndIndexIfMatches()) {
             return false;
         }
+
         return true;
     }
 
     /**
-     * @param array[] $assertBefore
-     * @return bool
+     * @return int|bool
      */
-    private function getStartIndexIfMatches(array $assertBefore)
+    private function getStartIndexIfMatches()
     {
         $finder = $this->getMatchingIndexFinder('backward');
-        return $finder(array_reverse($assertBefore));
+        return $finder(array_reverse($this->assertFramesBefore));
     }
 
     /**
-     * @param array[] $assertAfter
      * @return int|bool
      */
-    private function getEndIndexIfMatches(array $assertAfter)
+    private function getEndIndexIfMatches()
     {
         $finder = $this->getMatchingIndexFinder('forward');
-        return $finder($assertAfter);
+        return $finder($this->assertFramesAfter);
     }
 
     /**
@@ -110,11 +108,10 @@ class LizardsAndPumpkins_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer
         $op = 'backward' === $direction ? -1 : 1;
         
         $finder = function (array $frameSpecList, $stackIndex = null) use ($op, &$finder) {
-            if (empty($frameSpecList)) {
-                $foundMatchingIndex = is_null($stackIndex) ? $this->tokenIndex : $stackIndex - $op;
-                return $foundMatchingIndex;
+            if ([] === $frameSpecList) {
+                return null === $stackIndex ? $this->tokenIndex : $stackIndex - $op;
             }
-            $index = is_null($stackIndex) ? $this->tokenIndex + $op : $stackIndex;
+            $index = null === $stackIndex ? $this->tokenIndex + $op : $stackIndex;
             if ($index < 0 || !isset($this->tokenStack[$index])) {
                 return false;
             }
@@ -127,6 +124,7 @@ class LizardsAndPumpkins_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer
             }
             return $finder(array_slice($frameSpecList, 1), $nextTokenIndex);
         };
+
         return $finder;
     }
 
@@ -166,32 +164,16 @@ class LizardsAndPumpkins_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer
         return isset($this->tokenStack[$tokenIndex]) && $this->tokenStack[$tokenIndex]['content'] === PHP_EOL;
     }
 
-    /**
-     * @param PHP_CodeSniffer_File $file
-     * @return bool
-     */
-    private function addWarningMessage(PHP_CodeSniffer_File $file)
-    {
-        return $file->addFixableWarning($this->message, $this->tokenIndex, '', [], 0);
-    }
-
-    private function removeExpectsAnyTokensIfEnabled(PHP_CodeSniffer_File $file)
-    {
-        if (true === $file->fixer->enabled) {
-            $file->fixer->beginChangeset();
-            $this->removeExpectsAnyTokens($file);
-            $file->fixer->endChangeset();
-        }
-    }
-
     private function removeExpectsAnyTokens(PHP_CodeSniffer_File $file)
     {
-        $matchStartIndex = (int) $this->getStartIndexIfMatches($this->assertFramesBefore);
-        $matchEndIndex = (int) $this->getEndIndexIfMatches($this->assertFramesAfter);
+        $file->fixer->beginChangeset();
+        $matchStartIndex = (int) $this->getStartIndexIfMatches();
+        $matchEndIndex = (int) $this->getEndIndexIfMatches();
         for ($i = $matchStartIndex; $i <= $matchEndIndex; $i++) {
             $file->fixer->replaceToken($i, '');
         }
         $this->ifNewLineMoveNextLineUp($matchEndIndex+1, $file);
+        $file->fixer->endChangeset();
     }
 
     /**
