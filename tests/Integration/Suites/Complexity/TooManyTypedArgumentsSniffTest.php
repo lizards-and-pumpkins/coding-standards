@@ -12,7 +12,11 @@ class TooManyTypedArgumentsSniffTest extends SniffTest
 
     public function testNoWarningsAddedIfNumberOfTypedArgumentsDoesNotExceedAllowed()
     {
-        $code = 'public function processData(Foo $foo, Bar $bar, array $anArray, Baz $baz, $godKnowsWhatTypeIsIt) { }';
+        $code = <<<EOT
+public function processData(Foo \$foo, Bar \$bar, array \$anArray, string \$aString, Baz \$baz, \$godKnowsWhatTypeIsIt)
+{
+}
+EOT;
 
         $phpCSFile = $this->processCode($code);
         $errors = $phpCSFile->getWarnings();

@@ -19,7 +19,7 @@ class LizardsAndPumpkins_Sniffs_Complexity_TooManyTypedArgumentsSniff implements
     public function process(PHP_CodeSniffer_File $file, $tokenIndex)
     {
         $typedArgumentsCount = array_reduce($file->getMethodParameters($tokenIndex), function ($carry, $parameter) {
-            if ('' !== $parameter['type_hint'] && 'array' !== $parameter['type_hint']) {
+            if ('' !== $parameter['type_hint'] && $this->isObject($parameter['type_hint'])) {
                 return $carry + 1;
             }
             return $carry;
@@ -28,5 +28,10 @@ class LizardsAndPumpkins_Sniffs_Complexity_TooManyTypedArgumentsSniff implements
         if ($typedArgumentsCount > self::MAXIMUM_ALLOWED_TYPED_ARGUMENTS) {
             $file->addWarning('Too many objects passed to function', $tokenIndex);
         }
+    }
+
+    private function isObject(string $typeHintString) : bool
+    {
+        return ! in_array($typeHintString, ['array', 'callable', 'bool', 'float', 'int', 'string']);
     }
 }
