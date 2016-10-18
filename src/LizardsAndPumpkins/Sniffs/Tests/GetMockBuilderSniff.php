@@ -33,7 +33,7 @@ class LizardsAndPumpkins_Sniffs_Tests_GetMockBuilderSniff implements PHP_CodeSni
         }
 
         $file->addError(
-            'getMock(Foo::class, [], [], \'\', false) must be used for disabling original constructor',
+            'createMock() must be used for disabling original constructor',
             $tokenIndex
         );
     }
@@ -43,7 +43,7 @@ class LizardsAndPumpkins_Sniffs_Tests_GetMockBuilderSniff implements PHP_CodeSni
      * @param int $fromTokenIndex
      * @return bool|int
      */
-    private function getNextStringTokenIndexIgnoringMethodArguments(PHP_CodeSniffer_File $file, $fromTokenIndex)
+    private function getNextStringTokenIndexIgnoringMethodArguments(PHP_CodeSniffer_File $file, int $fromTokenIndex)
     {
         $nextClosingParenthesesTokenIndex = $file->findNext(T_CLOSE_PARENTHESIS, $fromTokenIndex + 1);
         return $file->findNext(T_STRING, $nextClosingParenthesesTokenIndex + 1);

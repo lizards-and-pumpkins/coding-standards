@@ -17,7 +17,7 @@ class GetMockBuilderSniffTest extends SniffTest
         $phpCSFile = $this->processCode($code);
 
         $error = $this->getFirstErrorMessage($phpCSFile->getErrors());
-        $expectedError = 'getMock(Foo::class, [], [], \'\', false) must be used for disabling original constructor';
+        $expectedError = 'createMock() must be used for disabling original constructor';
 
         $this->assertEquals($expectedError, $error);
     }
