@@ -31,16 +31,9 @@ abstract class SniffTest extends \PHPUnit_Framework_TestCase
         $_SERVER['argv'] = $this->originalArgs;
     }
 
-    /**
-     * @return string
-     */
-    abstract protected function getFileUnderTest();
+    abstract protected function getFileUnderTest() : string;
 
-    /**
-     * @param string $code
-     * @return PHP_CodeSniffer_File
-     */
-    final protected function processCode($code)
+    final protected function processCode(string $code) : PHP_CodeSniffer_File
     {
         if ('<?php ' !== substr($code, 0, 6)) {
             $code = '<?php ' . $code;
@@ -53,7 +46,7 @@ abstract class SniffTest extends \PHPUnit_Framework_TestCase
      * @param array[] $errors
      * @return string
      */
-    final protected function getFirstErrorMessage(array $errors)
+    final protected function getFirstErrorMessage(array $errors) : string
     {
         $error = array_shift($errors);
         if (!is_array($error)) {

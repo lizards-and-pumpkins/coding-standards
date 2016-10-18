@@ -2,10 +2,7 @@
 
 class TooManyTypedArgumentsSniffTest extends SniffTest
 {
-    /**
-     * @return string
-     */
-    protected function getFileUnderTest()
+    final protected function getFileUnderTest() : string
     {
         return 'src/LizardsAndPumpkins/Sniffs/Complexity/TooManyTypedArgumentsSniff.php';
     }

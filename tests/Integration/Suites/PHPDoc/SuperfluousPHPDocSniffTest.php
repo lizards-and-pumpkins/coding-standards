@@ -2,10 +2,7 @@
 
 class SuperfluousPHPDocSniffTest extends SniffTest
 {
-    /**
-     * @return string
-     */
-    protected final function getFileUnderTest()
+    final protected function getFileUnderTest() : string
     {
         return 'src/LizardsAndPumpkins/Sniffs/PHPDoc/SuperfluousPHPDocSniff.php';
     }
@@ -63,9 +60,8 @@ class SuperfluousPHPDocSniffTest extends SniffTest
 
     /**
      * @dataProvider getSuperfluousAnnotations
-     * @param string $superfluousAnnotation
      */
-    public function testErrorIsAddedIfFunctionDoesNotRequireAnAnnotationButOneIsSpecified($superfluousAnnotation)
+    public function testErrorIsAddedIfFunctionDoesNotRequireAnAnnotationButOneIsSpecified(string $superfluousAnnotation)
     {
         $code = '
         /**
@@ -83,7 +79,7 @@ class SuperfluousPHPDocSniffTest extends SniffTest
     /**
      * @return array[]
      */
-    public function getSuperfluousAnnotations()
+    public function getSuperfluousAnnotations() : array
     {
         return [
             ['@return void'],
@@ -122,9 +118,8 @@ class SuperfluousPHPDocSniffTest extends SniffTest
 
     /**
      * @dataProvider getTestRelatedAnnotations
-     * @param string $annotation
      */
-    public function testNoErrorsAddedIfPHPDocContainsAtLeastOneTestRelatedAnnotation($annotation)
+    public function testNoErrorsAddedIfPHPDocContainsAtLeastOneTestRelatedAnnotation(string $annotation)
     {
         $code = '
         /**
@@ -141,7 +136,7 @@ class SuperfluousPHPDocSniffTest extends SniffTest
     /**
      * @return array[]
      */
-    public function getTestRelatedAnnotations()
+    public function getTestRelatedAnnotations() : array
     {
         return [
             ['@depends'],

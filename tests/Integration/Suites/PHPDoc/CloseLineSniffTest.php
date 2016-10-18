@@ -2,10 +2,7 @@
 
 class CloseLineSniffTest extends SniffTest
 {
-    /**
-     * @return string
-     */
-    protected final function getFileUnderTest()
+    final protected function getFileUnderTest() : string
     {
         return 'src/LizardsAndPumpkins/Sniffs/PHPDoc/CloseLineSniff.php';
     }
