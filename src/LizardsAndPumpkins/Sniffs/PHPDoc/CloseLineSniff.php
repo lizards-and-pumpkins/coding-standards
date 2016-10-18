@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class LizardsAndPumpkins_Sniffs_PHPDoc_CloseLineSniff implements PHP_CodeSniffer_Sniff
 {
     use LizardsAndPumpkins_Traits_PHPDocSniffTrait;
@@ -33,11 +35,7 @@ class LizardsAndPumpkins_Sniffs_PHPDoc_CloseLineSniff implements PHP_CodeSniffer
         }
     }
 
-    /**
-     * @param int $functionTokenIndex
-     * @return bool
-     */
-    private function isThereAnyContentBeforeClosingPHPDocToken($functionTokenIndex)
+    private function isThereAnyContentBeforeClosingPHPDocToken(int $functionTokenIndex) : bool
     {
         $commentCloseTokenIndex = $this->getPhpDocEndTokenIndex($functionTokenIndex);
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class LizardsAndPumpkins_Sniffs_Complexity_TooManyTypedArgumentsSniff implements PHP_CodeSniffer_Sniff
 {
     const MAXIMUM_ALLOWED_TYPED_ARGUMENTS = 3;

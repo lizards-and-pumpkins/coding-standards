@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class LizardsAndPumpkins_Sniffs_Array_ArrayPushSniff implements PHP_CodeSniffer_Sniff
 {
 

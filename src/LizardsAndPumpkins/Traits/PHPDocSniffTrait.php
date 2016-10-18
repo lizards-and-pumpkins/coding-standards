@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
 {
     /**
@@ -12,21 +14,13 @@ trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
      */
     protected $tokens;
 
-    /**
-     * @param int $functionTokenIndex
-     * @return bool
-     */
-    private function phpDocIsRequired($functionTokenIndex)
+    private function phpDocIsRequired(int $functionTokenIndex) : bool
     {
         return $this->functionReturnsNonVoid($functionTokenIndex) ||
                $this->functionHasUntypedParameters($functionTokenIndex);
     }
 
-    /**
-     * @param $functionTokenIndex
-     * @return bool
-     */
-    private function phpDocExists($functionTokenIndex)
+    private function phpDocExists(int $functionTokenIndex) : bool
     {
         $commentEndIndex = $this->getPhpDocEndTokenIndex($functionTokenIndex);
 
@@ -37,7 +31,7 @@ trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
      * @param int $functionTokenIndex
      * @return bool|int
      */
-    private function getPhpDocEndTokenIndex($functionTokenIndex)
+    private function getPhpDocEndTokenIndex(int $functionTokenIndex)
     {
         $searchTypes = array_merge(PHP_CodeSniffer_Tokens::$methodPrefixes, [T_WHITESPACE]);
 
@@ -48,7 +42,7 @@ trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
      * @param int $functionTokenIndex
      * @return int[]
      */
-    private function getPHPDocAnnotationsIndices($functionTokenIndex)
+    private function getPHPDocAnnotationsIndices(int $functionTokenIndex) : array
     {
         $commentEndIndex = $this->getPhpDocEndTokenIndex($functionTokenIndex);
         $commentStartIndex = $this->tokens[$commentEndIndex]['comment_opener'];
@@ -60,11 +54,7 @@ trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
         return $this->tokens[$commentStartIndex]['comment_tags'];
     }
 
-    /**
-     * @param int $functionTokenIndex
-     * @return bool
-     */
-    private function functionReturnsNonVoid($functionTokenIndex)
+    private function functionReturnsNonVoid(int $functionTokenIndex) : bool
     {
         if ($this->isInterfaceOrAbstractFunction($functionTokenIndex)) {
             return true;
@@ -89,11 +79,7 @@ trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
         return $nonVoidReturnFound;
     }
 
-    /**
-     * @param int $functionTokenIndex
-     * @return bool
-     */
-    private function functionHasUntypedParameters($functionTokenIndex)
+    private function functionHasUntypedParameters(int $functionTokenIndex) : bool
     {
         $functionParameters = $this->file->getMethodParameters($functionTokenIndex);
 
@@ -110,42 +96,25 @@ trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
         return $hasUntypedParameter;
     }
 
-    /**
-     * @param int $startTokenIndex
-     * @param int $endTokenIndex
-     * @return int
-     */
-    private function getNextReturnIndex($startTokenIndex, $endTokenIndex)
+    private function getNextReturnIndex(int $startTokenIndex, int $endTokenIndex) : int
     {
         return (int) $this->file->findNext(T_RETURN, $startTokenIndex + 1, $endTokenIndex - 1);
     }
 
-    /**
-     * @param int $functionTokenIndex
-     * @return bool
-     */
-    private function isInterfaceOrAbstractFunction($functionTokenIndex)
+    private function isInterfaceOrAbstractFunction(int $functionTokenIndex) : bool
     {
         return T_FUNCTION === $this->tokens[$functionTokenIndex]['code'] &&
                !isset($this->tokens[$functionTokenIndex]['scope_opener']);
     }
 
-    /**
-     * @param int $startTokenIndex
-     * @return int
-     */
-    private function getNextNonEmptyTokenIndex($startTokenIndex)
+    private function getNextNonEmptyTokenIndex(int $startTokenIndex) : int
     {
         $searchTypes = array_merge(PHP_CodeSniffer_Tokens::$emptyTokens, [T_WHITESPACE]);
 
         return (int) $this->file->findNext($searchTypes, $startTokenIndex, null, true);
     }
 
-    /**
-     * @param int $tokenIndex
-     * @return bool
-     */
-    private function isInsideOfClosure($tokenIndex)
+    private function isInsideOfClosure(int $tokenIndex) : bool
     {
         return in_array(T_CLOSURE, $this->tokens[$tokenIndex]['conditions']);
     }
@@ -153,7 +122,7 @@ trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
     /**
      * @return string[]
      */
-    private function getAllowedAnnotations()
+    private function getAllowedAnnotations() : array
     {
         $annotationsAllowedInCode = [
             '@see',
@@ -167,7 +136,7 @@ trait LizardsAndPumpkins_Traits_PHPDocSniffTrait
     /**
      * @return string[]
      */
-    private function getAnnotationsAllowedInTests()
+    private function getAnnotationsAllowedInTests() : array
     {
         return [
             '@depends',

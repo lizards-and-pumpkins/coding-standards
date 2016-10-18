@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class BlankLinesAfterPHPDocSniffTest extends SniffTest
 {
     final protected function getFileUnderTest() : string

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class UselessAnnotationSniffTest extends SniffTest
 {
     final protected function getFileUnderTest() : string

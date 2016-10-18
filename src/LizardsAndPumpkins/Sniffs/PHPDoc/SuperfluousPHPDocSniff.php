@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class LizardsAndPumpkins_Sniffs_PHPDoc_SuperfluousPHPDocSniff implements PHP_CodeSniffer_Sniff
 {
     use LizardsAndPumpkins_Traits_PHPDocSniffTrait;
@@ -29,11 +31,7 @@ class LizardsAndPumpkins_Sniffs_PHPDoc_SuperfluousPHPDocSniff implements PHP_Cod
         }
     }
 
-    /**
-     * @param int $functionTokenIndex
-     * @return bool
-     */
-    private function phpDocContainsTestRelatedAnnotations($functionTokenIndex)
+    private function phpDocContainsTestRelatedAnnotations(int $functionTokenIndex) : bool
     {
         $annotationTokenIndices = $this->getPHPDocAnnotationsIndices($functionTokenIndex);
 

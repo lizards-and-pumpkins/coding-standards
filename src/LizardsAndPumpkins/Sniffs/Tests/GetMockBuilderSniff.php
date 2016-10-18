@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class LizardsAndPumpkins_Sniffs_Tests_GetMockBuilderSniff implements PHP_CodeSniffer_Sniff
 {
     /**

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class SuperfluousPHPDocSniffTest extends SniffTest
 {
     final protected function getFileUnderTest() : string

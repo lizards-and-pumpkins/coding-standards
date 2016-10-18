@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class LizardsAndPumpkins_Sniffs_PHPDoc_ArrayAnnotationSniff implements PHP_CodeSniffer_Sniff
 {
     use LizardsAndPumpkins_Traits_PHPDocSniffTrait;
@@ -40,11 +42,7 @@ class LizardsAndPumpkins_Sniffs_PHPDoc_ArrayAnnotationSniff implements PHP_CodeS
         }
     }
 
-    /**
-     * @param int $annotationIndex
-     * @return string
-     */
-    private function getNextAnnotationStringTokenContent($annotationIndex)
+    private function getNextAnnotationStringTokenContent(int $annotationIndex) : string
     {
         $nextTokenIndex = $this->file->findNext(T_DOC_COMMENT_WHITESPACE, $annotationIndex + 1, null, true);
 

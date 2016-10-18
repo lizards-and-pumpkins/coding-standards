@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 abstract class SniffTest extends \PHPUnit_Framework_TestCase
 {
     /**

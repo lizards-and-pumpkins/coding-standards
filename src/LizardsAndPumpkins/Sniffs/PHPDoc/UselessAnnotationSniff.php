@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class LizardsAndPumpkins_Sniffs_PHPDoc_UselessAnnotationSniff implements PHP_CodeSniffer_Sniff
 {
     use LizardsAndPumpkins_Traits_PHPDocSniffTrait;

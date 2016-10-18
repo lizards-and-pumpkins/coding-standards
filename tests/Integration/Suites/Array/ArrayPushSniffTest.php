@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class ArrayPushSniffTest extends SniffTest
 {
     final protected function getFileUnderTest() : string
