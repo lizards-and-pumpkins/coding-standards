@@ -14,16 +14,16 @@ class SuperfluousPHPDocSniffTest extends SniffTest
         $code = '
         /**
          * @param float $bar
-         * @return string
+         * @return string[]
          * @throws BarIsNotAnArrayException
          */
-        public function getFoo($bar)
+        public function getFoo($bar) : array
         {
             if (!is_float($bar)) {
                 throw new BarIsNotAnArrayException();
             }
 
-            return "foo";
+            return ["foo"];
         }';
 
         $phpCSFile = $this->processCode($code);

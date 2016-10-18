@@ -13,11 +13,11 @@ class UselessAnnotationSniffTest extends SniffTest
     {
         $code = '
         /**
-         * @return string
+         * @return string[]
          */
-        public function getFoo()
+        public function getFoo() : array
         {
-            return "foo";
+            return ["foo"];
         }';
 
         $phpCSFile = $this->processCode($code);
