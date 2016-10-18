@@ -49,6 +49,35 @@ class LizardsAndPumpkins_Sniffs_PHPDoc_UselessAnnotationSniff implements PHP_Cod
                 $currentLineNumber = $this->tokens[$currentIndex]['line'];
             }
         }
+    }
 
+    /**
+     * @return string[]
+     */
+    private function getAllowedAnnotations() : array
+    {
+        $annotationsAllowedInCode = [
+            '@see',
+            '@param',
+            '@return',
+        ];
+
+        return array_merge($annotationsAllowedInCode, $this->getAnnotationsAllowedInTests());
+    }
+
+    /**
+     * @return string[]
+     */
+    private function getAnnotationsAllowedInTests() : array
+    {
+        return [
+            '@depends',
+            '@dataProvider',
+            '@runInSeparateProcess',
+            '{@inheritdoc}',
+            '@before',
+            '@after',
+            '@requires',
+        ];
     }
 }

@@ -27,10 +27,6 @@ class LizardsAndPumpkins_Sniffs_PHPDoc_BlankLinesAfterPHPDocSniff implements PHP
             return;
         }
 
-        if (!$this->phpDocIsRequired($functionTokenIndex) && !$this->phpDocExists($functionTokenIndex)) {
-            return;
-        }
-
         if ($this->blankLinesBetweenFunctionAndItsDocBlock($functionTokenIndex)) {
             $this->file->addError('There must be no blank lines after PHPDoc', $functionTokenIndex);
         }
