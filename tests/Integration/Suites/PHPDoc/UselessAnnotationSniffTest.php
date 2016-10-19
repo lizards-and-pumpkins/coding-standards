@@ -1,11 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 class UselessAnnotationSniffTest extends SniffTest
 {
-    /**
-     * @return string
-     */
-    protected final function getFileUnderTest()
+    final protected function getFileUnderTest() : string
     {
         return 'src/LizardsAndPumpkins/Sniffs/PHPDoc/UselessAnnotationSniff.php';
     }
@@ -14,11 +13,11 @@ class UselessAnnotationSniffTest extends SniffTest
     {
         $code = '
         /**
-         * @return string
+         * @return string[]
          */
-        public function getFoo()
+        public function getFoo() : array
         {
-            return "foo";
+            return ["foo"];
         }';
 
         $phpCSFile = $this->processCode($code);

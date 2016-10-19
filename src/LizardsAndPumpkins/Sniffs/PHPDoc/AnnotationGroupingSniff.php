@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class LizardsAndPumpkins_Sniffs_PHPDoc_AnnotationGroupingSniff implements PHP_CodeSniffer_Sniff
 {
     use LizardsAndPumpkins_Traits_PHPDocSniffTrait;
@@ -36,7 +38,7 @@ class LizardsAndPumpkins_Sniffs_PHPDoc_AnnotationGroupingSniff implements PHP_Co
      * @param int $functionTokenIndex
      * @return array[]
      */
-    private function getGroupedPHPDocAnnotations($functionTokenIndex)
+    private function getGroupedPHPDocAnnotations(int $functionTokenIndex) : array
     {
         $groups = [];
 
@@ -57,7 +59,7 @@ class LizardsAndPumpkins_Sniffs_PHPDoc_AnnotationGroupingSniff implements PHP_Co
      * @param array[] $groups
      * @return bool
      */
-    private function groupsAreMixed(array $groups)
+    private function groupsAreMixed(array $groups) : bool
     {
         $groupsAreMixed = false;
 
@@ -72,7 +74,7 @@ class LizardsAndPumpkins_Sniffs_PHPDoc_AnnotationGroupingSniff implements PHP_Co
      * @param int[] $array
      * @return bool
      */
-    private function arrayOnlyContainsConsecutiveNumbers(array $array)
+    private function arrayOnlyContainsConsecutiveNumbers(array $array) : bool
     {
         $deductedArray = [];
         $arrayLength = count($array);

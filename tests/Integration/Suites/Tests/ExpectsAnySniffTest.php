@@ -1,12 +1,10 @@
 <?php
 
+declare(strict_types=1);
 
 class ExpectsAnySniffTest extends SniffTest
 {
-    /**
-     * @return string
-     */
-    protected function getFileUnderTest()
+    final protected function getFileUnderTest() : string
     {
         return 'src/LizardsAndPumpkins/Sniffs/Tests/ExpectsAnySniff.php';
     }
@@ -15,7 +13,7 @@ class ExpectsAnySniffTest extends SniffTest
      * @test
      * @dataProvider expectsAnyMethodCallDataProvider
      */
-    public function itShouldAddAnErrorIfExpectsAnyIsUsedInATest($code)
+    public function itShouldAddAnErrorIfExpectsAnyIsUsedInATest(string $code)
     {
         $phpCSFile = $this->processCode($code);
 
@@ -28,7 +26,7 @@ class ExpectsAnySniffTest extends SniffTest
     /**
      * @return array[]
      */
-    public function expectsAnyMethodCallDataProvider()
+    public function expectsAnyMethodCallDataProvider() : array
     {
         return [
             'no-whitespace' => ['$mock->expects($this->any())->method(\'foo\')'],

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class LizardsAndPumpkins_Sniffs_PHPDoc_BlankLinesAfterPHPDocSniff implements PHP_CodeSniffer_Sniff
 {
     use LizardsAndPumpkins_Traits_PHPDocSniffTrait;
@@ -25,20 +27,12 @@ class LizardsAndPumpkins_Sniffs_PHPDoc_BlankLinesAfterPHPDocSniff implements PHP
             return;
         }
 
-        if (!$this->phpDocIsRequired($functionTokenIndex) && !$this->phpDocExists($functionTokenIndex)) {
-            return;
-        }
-
         if ($this->blankLinesBetweenFunctionAndItsDocBlock($functionTokenIndex)) {
             $this->file->addError('There must be no blank lines after PHPDoc', $functionTokenIndex);
         }
     }
 
-    /**
-     * @param int $functionTokenIndex
-     * @return bool
-     */
-    private function blankLinesBetweenFunctionAndItsDocBlock($functionTokenIndex)
+    private function blankLinesBetweenFunctionAndItsDocBlock(int $functionTokenIndex) : bool
     {
         $commentEndIndex = $this->getPhpDocEndTokenIndex($functionTokenIndex);
 

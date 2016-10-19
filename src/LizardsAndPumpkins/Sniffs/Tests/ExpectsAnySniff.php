@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class LizardsAndPumpkins_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer_Sniff
 {
     /**
@@ -65,10 +67,7 @@ class LizardsAndPumpkins_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer
         }
     }
 
-    /**
-     * @return bool
-     */
-    private function isMatchesExpectsAnyMethodCall()
+    private function isMatchesExpectsAnyMethodCall() : bool
     {
         if ('expects' !== $this->tokenStack[$this->tokenIndex]['content']) {
             return false;
@@ -99,11 +98,7 @@ class LizardsAndPumpkins_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer
         return $finder($this->assertFramesAfter);
     }
 
-    /**
-     * @param string $direction
-     * @return callable
-     */
-    private function getMatchingIndexFinder($direction = 'forward')
+    private function getMatchingIndexFinder(string $direction = 'forward') : callable
     {
         $op = 'backward' === $direction ? -1 : 1;
         
@@ -133,7 +128,7 @@ class LizardsAndPumpkins_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer
      * @param mixed[] $tokenToCheck
      * @return bool
      */
-    private function isMatchingFrame(array $tokenSpec, array $tokenToCheck)
+    private function isMatchingFrame(array $tokenSpec, array $tokenToCheck) : bool
     {
         foreach ($tokenSpec as $key => $value) {
             if (!isset($tokenToCheck[$key])) {
@@ -146,20 +141,12 @@ class LizardsAndPumpkins_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer
         return true;
     }
 
-    /**
-     * @param int $tokenIndex
-     * @return bool
-     */
-    private function isWhitespace($tokenIndex)
+    private function isWhitespace(int $tokenIndex) : bool
     {
         return isset($this->tokenStack[$tokenIndex]) && $this->tokenStack[$tokenIndex]['type'] === 'T_WHITESPACE';
     }
 
-    /**
-     * @param int $tokenIndex
-     * @return bool
-     */
-    private function isNewline($tokenIndex)
+    private function isNewline(int $tokenIndex) : bool
     {
         return isset($this->tokenStack[$tokenIndex]) && $this->tokenStack[$tokenIndex]['content'] === PHP_EOL;
     }
@@ -176,11 +163,7 @@ class LizardsAndPumpkins_Sniffs_Tests_ExpectsAnySniff implements PHP_CodeSniffer
         $file->fixer->endChangeset();
     }
 
-    /**
-     * @param int $index
-     * @param PHP_CodeSniffer_File $file
-     */
-    private function ifNewLineMoveNextLineUp($index, PHP_CodeSniffer_File $file)
+    private function ifNewLineMoveNextLineUp(int $index, PHP_CodeSniffer_File $file)
     {
         if ($this->isNewline($index)) {
             while ($this->isWhitespace($index)) {

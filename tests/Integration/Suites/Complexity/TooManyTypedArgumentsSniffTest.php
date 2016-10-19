@@ -1,18 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 class TooManyTypedArgumentsSniffTest extends SniffTest
 {
-    /**
-     * @return string
-     */
-    protected function getFileUnderTest()
+    final protected function getFileUnderTest() : string
     {
         return 'src/LizardsAndPumpkins/Sniffs/Complexity/TooManyTypedArgumentsSniff.php';
     }
 
     public function testNoWarningsAddedIfNumberOfTypedArgumentsDoesNotExceedAllowed()
     {
-        $code = 'public function processData(Foo $foo, Bar $bar, array $anArray, Baz $baz, $godKnowsWhatTypeIsIt) { }';
+        $code = <<<EOT
+public function processData(Foo \$foo, Bar \$bar, array \$anArray, string \$aString, Baz \$baz, \$godKnowsWhatTypeIsIt)
+{
+}
+EOT;
 
         $phpCSFile = $this->processCode($code);
         $errors = $phpCSFile->getWarnings();

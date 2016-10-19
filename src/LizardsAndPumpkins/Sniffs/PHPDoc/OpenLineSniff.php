@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class LizardsAndPumpkins_Sniffs_PHPDoc_OpenLineSniff implements PHP_CodeSniffer_Sniff
 {
     use LizardsAndPumpkins_Traits_PHPDocSniffTrait;
@@ -34,11 +36,7 @@ class LizardsAndPumpkins_Sniffs_PHPDoc_OpenLineSniff implements PHP_CodeSniffer_
         }
     }
 
-    /**
-     * @param int $functionTokenIndex
-     * @return bool
-     */
-    private function isThereAnyContentAfterOpenPHPDocToken($functionTokenIndex)
+    private function isThereAnyContentAfterOpenPHPDocToken(int $functionTokenIndex) : bool
     {
         $commentEndIndex = $this->getPhpDocEndTokenIndex($functionTokenIndex);
         $commentStartIndex = $this->tokens[$commentEndIndex]['comment_opener'];

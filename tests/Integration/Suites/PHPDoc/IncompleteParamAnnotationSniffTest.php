@@ -1,11 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 class IncompleteParamAnnotationSniffTest extends SniffTest
 {
-    /**
-     * @return string
-     */
-    protected function getFileUnderTest()
+    final protected function getFileUnderTest() : string
     {
         return 'src/LizardsAndPumpkins/Sniffs/PHPDoc/IncompleteParamAnnotationSniff.php';
     }
@@ -26,9 +25,8 @@ class IncompleteParamAnnotationSniffTest extends SniffTest
 
     /**
      * @dataProvider incompleteParamAnnotationProvider
-     * @param string $incompleteParamAnnotation
      */
-    public function testErrorIsAddedIfVariableNameIsMissing($incompleteParamAnnotation)
+    public function testErrorIsAddedIfVariableNameIsMissing(string $incompleteParamAnnotation)
     {
         $phpCSFile = $this->processCode($incompleteParamAnnotation);
         $error = $this->getFirstErrorMessage($phpCSFile->getErrors());
@@ -38,9 +36,9 @@ class IncompleteParamAnnotationSniffTest extends SniffTest
     }
 
     /**
-     * @return array
+     * @return array[]
      */
-    public function incompleteParamAnnotationProvider()
+    public function incompleteParamAnnotationProvider() : array
     {
         return [
             ['

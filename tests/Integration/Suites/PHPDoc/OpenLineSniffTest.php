@@ -1,11 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 class OpenLineSniffTest extends SniffTest
 {
-    /**
-     * @return string
-     */
-    protected final function getFileUnderTest()
+    final protected function getFileUnderTest() : string
     {
         return 'src/LizardsAndPumpkins/Sniffs/PHPDoc/OpenLineSniff.php';
     }

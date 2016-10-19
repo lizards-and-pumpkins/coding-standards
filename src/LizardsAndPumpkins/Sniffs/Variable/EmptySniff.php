@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 class LizardsAndPumpkins_Sniffs_Variable_EmptySniff implements PHP_CodeSniffer_Sniff
 {
     /**

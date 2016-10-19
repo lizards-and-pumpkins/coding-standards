@@ -1,11 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 class ArrayPushSniffTest extends SniffTest
 {
-    /**
-     * @return string
-     */
-    protected function getFileUnderTest()
+    final protected function getFileUnderTest() : string
     {
         return 'src/LizardsAndPumpkins/Sniffs/Array/ArrayPushSniff.php';
     }
